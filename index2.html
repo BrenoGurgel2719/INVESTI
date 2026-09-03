@@ -1,0 +1,3196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sir Investimentos | Assessoria Financeira</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-dark: #050505;
+            --bg-dark-2: #111111;
+            --text-light: #f5f5f5;
+            --text-muted: rgba(255, 255, 255, 0.7);
+            --gold: #d9b15b;
+            --gold-dark: #b88d39;
+            --border: rgba(255, 255, 255, 0.08);
+            --shadow: rgba(0, 0, 0, 0.35);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Montserrat', sans-serif;
+            background: #000000;
+            color: #1b1b1b;
+            padding-top: 88px;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        button {
+            font: inherit;
+            cursor: pointer;
+        }
+
+        .container {
+            width: min(1200px, calc(100% - 32px));
+            margin: 0 auto;
+        }
+
+        .site-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(5, 5, 5, 0.96);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            z-index: 1000;
+            box-shadow: 0 10px 30px var(--shadow);
+            /* overflow: hidden; <- remover daqui */
+        }
+
+        .header-glow {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .header-glow::before {
+            content: "";
+            position: absolute;
+            inset: -30% -15%;
+            background-image: linear-gradient(115deg,
+                    transparent 0%,
+                    transparent 42%,
+                    rgba(217, 177, 91, 0.10) 47%,
+                    rgba(255, 232, 168, 0.1) 50%,
+                    rgba(217, 177, 91, 0.10) 53%,
+                    transparent 58%,
+                    transparent 100%);
+            background-size: 220% 100%;
+            background-repeat: repeat-x;
+            filter: blur(20px);
+            animation: goldSweep 5s linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes goldSweep {
+            from {
+                background-position: 0% 0;
+            }
+
+            to {
+                background-position: -220% 0;
+            }
+        }
+
+        @keyframes navReveal {
+            from {
+                opacity: 0;
+                transform: translateY(-14px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+
+        .navbar {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            min-height: 88px;
+            gap: 1rem;
+        }
+
+        .brand {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 160px;
+            margin-right: 2.2rem;
+            opacity: 0;
+            animation: navReveal 0.55s ease forwards;
+        }
+
+        .brand img {
+            display: block;
+            width: 160px;
+            height: auto;
+            object-fit: contain;
+            filter: brightness(1.1);
+        }
+
+        .nav-panel {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex: 1;
+            gap: 1.5rem;
+            margin-left: 0.5rem;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            margin: 0;
+            padding: 0;
+            flex-wrap: wrap;
+        }
+
+        .nav-links li {
+            opacity: 0;
+            animation: navReveal 0.55s ease forwards;
+        }
+
+        .nav-links li:nth-child(1) { animation-delay: 0.10s; }
+        .nav-links li:nth-child(2) { animation-delay: 0.22s; }
+        .nav-links li:nth-child(3) { animation-delay: 0.34s; }
+        .nav-links li:nth-child(4) { animation-delay: 0.46s; }
+
+        .nav-links a {
+            position: relative;
+            color: var(--text-light);
+            font-size: 0.82rem;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+            transition: color 0.25s ease, opacity 0.25s ease;
+            opacity: 0.9;
+        }
+
+        .nav-links a::after {
+            content: "";
+            position: absolute;
+            left: 50%;
+            bottom: -8px;
+            width: 0;
+            height: 2px;
+            background: var(--gold);
+            transform: translateX(-50%);
+            transition: width 0.25s ease;
+        }
+
+        .nav-links a:hover::after,
+        .nav-links a:focus-visible::after {
+            width: 100%;
+        }
+
+        .nav-links a:hover,
+        .nav-links a:focus-visible {
+            color: var(--gold);
+            opacity: 1;
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.9rem;
+            margin-left: auto;
+        }
+
+        .nav-actions .btn {
+            opacity: 0;
+            animation: navReveal 0.6s ease forwards;
+        }
+
+        .nav-actions .btn-dark { animation-delay: 0.58s; }
+        .nav-actions .btn-gold { animation-delay: 0.72s; }
+
+        .btn {
+            border: none;
+            border-radius: 999px;
+            padding: 0.8rem 1.2rem;
+            font-size: 0.8rem;
+            font-weight: 700;
+            transition: transform 0.2s ease, filter 0.2s ease, background 0.2s ease;
+        }
+
+        .btn:hover,
+        .btn:focus-visible {
+            transform: translateY(-1px);
+            filter: brightness(1.04);
+        }
+
+        .btn-dark {
+            background: #1b1b1b;
+            color: var(--text-light);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+        }
+
+        .btn-gold {
+            background: var(--gold);
+            color: #121212;
+        }
+
+        .menu-toggle {
+            display: none;
+            width: 48px;
+            height: 48px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            background: transparent;
+            border-radius: 10px;
+            padding: 0.7rem 0.6rem;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .menu-toggle span {
+            display: block;
+            width: 100%;
+            height: 2px;
+            background: var(--text-light);
+            border-radius: 999px;
+            transition: transform 0.2s ease, opacity 0.2s ease;
+        }
+
+        .menu-toggle.active span:nth-child(1) {
+            transform: translateY(9px) rotate(45deg);
+        }
+
+        .menu-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .menu-toggle.active span:nth-child(3) {
+            transform: translateY(-9px) rotate(-45deg);
+        }
+
+        .img-wrapper {
+            width: 100%;
+            max-height: 100vh;
+            overflow: hidden;
+            background: #000000;
+        }
+
+        .img-wrapper img {
+            display: block;
+            width: 100%;
+            height: auto;
+            max-height: 100vh;
+            object-fit: cover;
+        }
+
+        .about-section {
+            background: linear-gradient(180deg, #000000 0%, #0F0F0F 100%);
+            color: var(--text-light);
+            padding: 110px 0 90px;
+        }
+
+        .satisfaction-section {
+            background:
+                radial-gradient(circle at center, rgba(217, 177, 91, 0.10), transparent 28%),
+                linear-gradient(180deg, #050505 0%, #050505 100%);
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            padding: 70px 0 80px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .satisfaction-section::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background-image: radial-gradient(rgba(255, 255, 255, 0.06) 0.8px, transparent 0.8px);
+            background-size: 11px 11px;
+            opacity: 0.3;
+            pointer-events: none;
+        }
+
+        .satisfaction-inner {
+            display: grid;
+            grid-template-columns: 1fr 0.9fr;
+            align-items: center;
+            gap: 4rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .nps-side {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 1.6rem;
+        }
+
+        .nps-ring-wrap {
+            position: relative;
+            width: min(32vw, 360px);
+            max-width: 360px;
+            aspect-ratio: 1;
+            display: grid;
+            place-items: center;
+            filter: drop-shadow(0 0 28px rgba(217, 177, 91, 0.55));
+        }
+
+        .nps-ring-wrap::before {
+            content: "";
+            position: absolute;
+            inset: 8%;
+            border-radius: 50%;
+            background: rgba(217, 177, 91, 0.12);
+            filter: blur(32px);
+            z-index: 0;
+        }
+
+        .nps-svg {
+            width: 100%;
+            height: 100%;
+            transform: rotate(-90deg);
+            position: relative;
+            z-index: 1;
+        }
+
+        .nps-track {
+            fill: none;
+            stroke: rgba(255, 255, 255, 0.14);
+            stroke-width: 18;
+        }
+
+        .nps-progress {
+            fill: none;
+            stroke: url(#npsGradient);
+            stroke-width: 18;
+            stroke-linecap: round;
+            stroke-dasharray: 565.49;
+            stroke-dashoffset: 565.49;
+        }
+
+        .nps-center {
+            position: absolute;
+            inset: 12%;
+            border-radius: 50%;
+            background: rgba(11, 11, 11, 0.85);
+            border: 3px solid rgba(217, 177, 91, 0.9);
+            box-shadow: inset 0 0 20px rgba(217, 177, 91, 0.18);
+            display: grid;
+            place-items: center;
+            text-align: center;
+            z-index: 2;
+        }
+
+        .nps-label {
+            display: block;
+            color: var(--gold);
+            font-size: clamp(1.2rem, 1.5vw, 2rem);
+            font-weight: 700;
+            letter-spacing: 0.03em;
+            margin-bottom: 0.2rem;
+        }
+
+        .nps-value {
+            display: block;
+            color: var(--gold);
+            font-size: clamp(2.5rem, 4vw, 4.2rem);
+            font-weight: 800;
+            line-height: 1;
+            letter-spacing: -0.08em;
+        }
+
+        .nps-text {
+            text-align: center;
+            max-width: 560px;
+        }
+
+        .nps-title {
+            margin: 0;
+            font-size: clamp(3rem, 4vw, 5rem);
+            line-height: 0.95;
+            letter-spacing: -0.07em;
+            color: #f6f6f6;
+            font-weight: 600;
+            text-transform: uppercase;
+            text-align: left;
+        }
+
+        .nps-title strong {
+            color: var(--gold);
+            font-size: inherit;
+            font-style: italic;
+            font-weight: 700;
+        }
+
+        .nps-subtitle {
+            margin: 1rem 0 0;
+            color: rgba(255, 255, 255, 0.72);
+            font-size: 1rem;
+            line-height: 1.8;
+            text-align: left;
+            max-width: 540px;
+        }
+
+        .nps-subtitle strong {
+            color: var(--text-light);
+            font-weight: 700;
+        }
+
+        .testimonial-header {
+            position: relative;
+            z-index: 1;
+            margin-bottom: 1.5rem;
+        }
+
+        .testimonial-header h3 {
+            margin: 0;
+            color: var(--text-light);
+            font-size: clamp(2.2rem, 3.4vw, 4rem);
+            line-height: 0.98;
+            letter-spacing: -0.06em;
+            font-weight: 700;
+            max-width: 550px;
+        }
+
+        .testimonial-card {
+            background: rgba(20, 20, 20, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 24px;
+            padding: 2.2rem 2rem 1.7rem;
+            max-width: 530px;
+            width: 100%;
+            min-height: 420px;
+            box-shadow: 0 24px 45px rgba(0, 0, 0, 0.25);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            margin-left: auto;
+        }
+
+        .testimonial-card::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.00));
+            pointer-events: none;
+        }
+
+        .testimonial-quote {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .testimonial-mark {
+            color: var(--gold);
+            font-size: 5rem;
+            line-height: 0.8;
+            font-weight: 700;
+            margin-top: -0.5rem;
+        }
+
+        .testimonial-copy {
+            margin: 0;
+            color: rgba(255, 255, 255, 0.78);
+            font-size: 1.05rem;
+            line-height: 1.7;
+            max-width: 360px;
+        }
+
+        .testimonial-person {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .testimonial-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid rgba(217, 177, 91, 0.7);
+            box-shadow: 0 0 18px rgba(217, 177, 91, 0.2);
+        }
+
+        .testimonial-meta {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.2rem;
+        }
+
+        .testimonial-client {
+            display: block;
+            color: rgba(255, 255, 255, 0.72);
+            font-size: 0.72rem;
+            letter-spacing: 0.12em;
+        }
+
+        .testimonial-role {
+            display: inline-block;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+
+        .testimonial-name {
+            display: inline-block;
+            color: var(--text-light);
+            font-size: 1.1rem;
+            font-weight: 800;
+            letter-spacing: 0.02em;
+            text-transform: uppercase;
+        }
+
+        .testimonial-stars {
+            display: flex;
+            gap: 0.2rem;
+            margin-top: 0.8rem;
+            color: var(--gold);
+            font-size: 1.3rem;
+            letter-spacing: 0.12em;
+        }
+
+        .testimonial-content {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .testimonial-controls {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 1.8rem;
+        }
+
+        .testimonial-nav {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .nav-arrow {
+            width: 36px;
+            height: 36px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: transparent;
+            border-radius: 50%;
+            color: var(--text-light);
+            font-size: 1.6rem;
+            line-height: 1;
+            display: grid;
+            place-items: center;
+            cursor: pointer;
+            transition: all 0.25s ease;
+        }
+
+        .nav-arrow:hover,
+        .nav-arrow:focus-visible {
+            background: rgba(217, 177, 91, 0.12);
+            border-color: rgba(217, 177, 91, 0.45);
+            color: var(--gold);
+        }
+
+        .testimonial-dots {
+            display: flex;
+            gap: 0.6rem;
+            align-items: center;
+            justify-content: center;
+            flex: 1;
+        }
+
+        .testimonial-dots button {
+            width: 10px;
+            height: 10px;
+            padding: 0;
+            border: none;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.25);
+            cursor: pointer;
+            transition: all 0.25s ease;
+        }
+
+        .testimonial-dots button.is-active {
+            width: 32px;
+            border-radius: 999px;
+            background: var(--gold);
+            box-shadow: 0 0 12px rgba(217, 177, 91, 0.6);
+        }
+
+        .about-inner {
+            display: grid;
+            grid-template-columns: 1.15fr 0.85fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .gallery-masonry {
+            column-count: 2;
+            column-gap: 1rem;
+        }
+
+        .gallery-card {
+            display: inline-block;
+            width: 100%;
+            margin: 0 0 1rem;
+            overflow: hidden;
+            border-radius: 22px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 20px 35px rgba(0, 0, 0, 0.22);
+            background: #101010;
+            cursor: pointer;
+            transition: transform 0.35s ease, box-shadow 0.35s ease;
+            break-inside: avoid;
+        }
+
+        .gallery-card:hover,
+        .gallery-card:focus-visible,
+        .gallery-card.is-open {
+            transform: scale(1.02);
+            box-shadow: 0 26px 42px rgba(0, 0, 0, 0.28);
+        }
+
+        .gallery-card img {
+            display: block;
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            transition: transform 0.45s ease, filter 0.35s ease;
+        }
+
+        .gallery-card:hover img,
+        .gallery-card:focus-visible img,
+        .gallery-card.is-open img {
+            transform: scale(1.08);
+            filter: saturate(1.08);
+        }
+
+        .gallery-card[data-height="small"] img {
+            height: 210px;
+        }
+
+        .gallery-card[data-height="medium"] img {
+            height: 260px;
+        }
+
+        .gallery-card[data-height="tall"] img {
+            height: 330px;
+        }
+
+        .about-copy {
+            max-width: 520px;
+        }
+
+        .section-tag {
+            display: inline-block;
+            margin-bottom: 1rem;
+            color: var(--gold);
+            font-size: 0.76rem;
+            font-weight: 700;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+        }
+
+        .about-copy h2 {
+            margin: 0;
+            color: var(--text-light);
+            font-size: clamp(2.3rem, 3vw, 3.2rem);
+            line-height: 1.08;
+            letter-spacing: -0.05em;
+        }
+
+        .about-copy h2 strong {
+            color: var(--gold);
+            font-style: italic;
+        }
+
+        .about-copy p {
+            margin: 1.4rem 0 0;
+            color: rgba(255, 255, 255, 0.72);
+            font-size: 1rem;
+            line-height: 1.8;
+        }
+
+        .gold-divider {
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, rgba(217, 177, 91, 0.15) 0%, var(--gold) 25%, var(--gold) 100%);
+            margin: 2rem 0 0;
+        }
+
+        .stats {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .stat {
+            min-width: 150px;
+            flex: 1 1 150px;
+            padding-top: 1.1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.14);
+        }
+
+        .stat-value {
+            display: block;
+            font-size: clamp(2rem, 2.2vw, 2.9rem);
+            font-weight: 800;
+            line-height: 1;
+            color: var(--gold);
+            letter-spacing: -0.08em;
+        }
+
+        .stat-label {
+            display: block;
+            margin-top: 0.5rem;
+            font-size: 0.76rem;
+            color: rgba(255, 255, 255, 0.7);
+            letter-spacing: 0.06em;
+            line-height: 1.5;
+            text-transform: uppercase;
+        }
+
+        /* Linha do tempo (scroll-driven) */
+        .timeline-section {
+            margin-top: 100px;
+        }
+
+        /* "Pin" via CSS puro (position: sticky) em vez do pin do GSAP:
+           .timeline-scroll define a distância de rolagem (altura extra),
+           .timeline-pin gruda no topo enquanto essa distância é percorrida.
+           É mais robusto que o pin via JS — nunca "escapa" para fora do
+           fluxo do documento nem sobrepõe outras seções. */
+        .timeline-scroll {
+            position: relative;
+        }
+
+        .timeline-pin {
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: clamp(2.5rem, 5vw, 4rem);
+            overflow: hidden;
+        }
+
+        .timeline-lead {
+            max-width: 640px;
+            margin: 0 auto;
+            padding: 0 4px;
+            color: rgba(255, 255, 255, 0.75);
+            font-size: 1.05rem;
+            line-height: 1.8;
+            text-align: center;
+        }
+
+        .timeline-track {
+            display: flex;
+            align-items: center;
+            gap: clamp(60px, 8vw, 140px);
+            padding: 0 8vw;
+            position: relative;
+            will-change: transform;
+        }
+
+        .timeline-track::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 50%;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.12);
+            transform: translateY(-50%);
+            z-index: 0;
+        }
+
+        .timeline-item {
+            position: relative;
+            z-index: 1;
+            flex: 0 0 auto;
+            width: clamp(240px, 22vw, 320px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            transform: scale(0.94);
+            transition: transform 0.4s ease;
+        }
+
+        .timeline-item.is-active {
+            transform: scale(1);
+        }
+
+        .timeline-year {
+            font-size: clamp(2rem, 3vw, 2.8rem);
+            font-weight: 800;
+            color: rgba(255, 255, 255, 0.4);
+            letter-spacing: -0.04em;
+            transition: color 0.4s ease;
+        }
+
+        .timeline-item.is-active .timeline-year {
+            color: var(--gold);
+        }
+
+        .timeline-dot {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: var(--bg-dark-2);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            margin: 1.1rem 0;
+            transition: background 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        .timeline-item.is-active .timeline-dot {
+            background: var(--gold);
+            border-color: var(--gold);
+            box-shadow: 0 0 0 6px rgba(217, 177, 91, 0.15);
+        }
+
+        .timeline-desc {
+            margin: 0;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.55);
+            transition: color 0.4s ease;
+        }
+
+        .timeline-item.is-active .timeline-desc {
+            color: rgba(255, 255, 255, 0.85);
+        }
+
+        @media (max-width: 900px) {
+            .nav-panel {
+                position: absolute;
+                top: calc(100% + 8px);
+                left: 16px;
+                right: 16px;
+                background: rgba(17, 17, 17, 0.98);
+                border: 1px solid var(--border);
+                border-radius: 16px;
+                box-shadow: 0 18px 35px rgba(0, 0, 0, 0.28);
+                padding: 1rem;
+                display: none;
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .navbar {
+                position: relative;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+
+            .nav-panel.open {
+                display: flex;
+            }
+
+            .nav-links {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.8rem;
+                width: 100%;
+            }
+
+            .nav-actions {
+                width: 100%;
+                display: grid;
+                grid-template-columns: 1fr;
+                gap: 0.75rem;
+                margin-left: 0;
+            }
+
+            .btn {
+                width: 100%;
+            }
+
+            .img-wrapper {
+                max-height: 72vh;
+            }
+
+            .img-wrapper img {
+                max-height: 72vh;
+            }
+
+            .about-section {
+                padding-top: 80px;
+            }
+
+            .about-inner {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .about-copy {
+                order: 1;
+            }
+
+            .gallery-masonry {
+                order: 2;
+                column-count: 1;
+            }
+
+            .timeline-section {
+                margin-top: 70px;
+            }
+
+            .timeline-scroll {
+                height: auto !important;
+            }
+
+            .timeline-pin {
+                position: static;
+                height: auto;
+                overflow: visible;
+                gap: 1.5rem;
+                padding: 0.5rem 0 1rem;
+            }
+
+            .timeline-track {
+                overflow-x: auto;
+                overflow-y: hidden;
+                scroll-snap-type: x proximity;
+                -webkit-overflow-scrolling: touch;
+                padding: 0 6vw 1rem;
+                gap: 44px;
+            }
+
+            .timeline-item {
+                width: 220px;
+                scroll-snap-align: center;
+            }
+
+            .satisfaction-section {
+                padding: 60px 0 70px;
+            }
+
+            .satisfaction-inner {
+                grid-template-columns: 1fr;
+                gap: 2.2rem;
+            }
+
+            .nps-side {
+                gap: 1rem;
+            }
+
+            .nps-ring-wrap {
+                width: min(64vw, 280px);
+            }
+
+            .nps-text {
+                text-align: center;
+            }
+
+            .nps-title {
+                text-align: center;
+                font-size: clamp(2.5rem, 9vw, 4.2rem);
+            }
+
+            .nps-subtitle {
+                text-align: center;
+                max-width: 100%;
+            }
+
+            .testimonial-content {
+                width: 100%;
+            }
+
+            .testimonial-card {
+                max-width: 100%;
+                min-height: auto;
+                padding: 1.5rem 1.1rem 1.1rem;
+                margin: 0 auto;
+            }
+
+            .testimonial-header h3 {
+                font-size: clamp(2rem, 7vw, 3rem);
+                max-width: 100%;
+            }
+
+            .testimonial-quote {
+                gap: 0.6rem;
+            }
+
+            .testimonial-copy {
+                max-width: none;
+                font-size: 0.98rem;
+            }
+
+            .testimonial-person {
+                align-items: center;
+            }
+        }
+
+        @media (max-width: 560px) {
+            body {
+                padding-top: 76px;
+            }
+
+            .navbar {
+                min-height: 76px;
+            }
+
+            .brand {
+                min-width: auto;
+                margin-right: 0;
+            }
+
+            .brand img {
+                width: 130px;
+            }
+
+            .menu-toggle {
+                width: 42px;
+                height: 42px;
+            }
+
+            .nps-ring-wrap {
+                width: min(76vw, 240px);
+            }
+
+            .nps-center {
+                inset: 11%;
+            }
+
+            .nps-label {
+                font-size: 1rem;
+            }
+
+            .nps-value {
+                font-size: clamp(2.2rem, 11vw, 3.4rem);
+            }
+
+            .nps-subtitle {
+                font-size: 0.94rem;
+            }
+
+            .testimonial-person {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .testimonial-avatar {
+                width: 52px;
+                height: 52px;
+            }
+
+            .testimonial-name {
+                font-size: 1rem;
+            }
+
+            .testimonial-controls {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .testimonial-nav {
+                justify-content: center;
+                width: 100%;
+            }
+
+            .testimonial-dots {
+                width: 100%;
+            }
+        }
+        /* ===== Nossos diferenciais (carrossel 3D) ===== */
+        .differentials-section {
+            background: linear-gradient(180deg, #0F0F0F 0%, #000000 100%);
+            padding: 100px 0 70px;
+        }
+
+        .differentials-intro {
+            text-align: center;
+            max-width: 640px;
+            margin: 0 auto 3rem;
+        }
+
+        .differentials-intro h2 {
+            margin: 0.6rem 0 0;
+            color: var(--text-light);
+            font-size: clamp(2rem, 3vw, 2.8rem);
+            letter-spacing: -0.04em;
+        }
+
+        .differentials-intro h2 strong {
+            color: var(--gold);
+            font-style: italic;
+        }
+
+        :root {
+            --mzaC-slideW: min(880px, 90vw);
+            --mzaPagH: 56px;
+            --mzaCardH: clamp(360px, 58vh, 520px);
+        }
+
+        .mzaCarousel {
+            position: relative;
+            height: min(680px, 80vh);
+            max-width: 100vw;
+            margin: 0 auto;
+            padding: 0 18px;
+            overflow: hidden;
+            contain: layout paint;
+            touch-action: pan-y;
+        }
+
+        .mzaCarousel-viewport {
+            position: relative;
+            outline: none;
+            overflow: hidden;
+            height: 100%;
+        }
+
+        .mzaCarousel-track {
+            position: relative;
+            height: calc(100% - var(--mzaPagH) - 12px);
+            transform-style: preserve-3d;
+            perspective: 1200px;
+            overflow: hidden;
+        }
+
+        .mzaCarousel-slide {
+            position: absolute;
+            top: calc(50% + 5px);
+            left: 50%;
+            width: var(--mzaC-slideW);
+            height: min(var(--mzaCardH), calc(100% - 30px));
+            transform-style: preserve-3d;
+            display: grid;
+            place-items: center;
+            border-radius: 22px;
+            overflow: hidden;
+            will-change: transform, filter;
+        }
+
+        .mzaCard {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            border-radius: inherit;
+            overflow: hidden;
+            display: flex;
+            align-items: stretch;
+            gap: clamp(20px, 3vw, 56px);
+            padding: clamp(28px, 3.4vw, 52px);
+            background: linear-gradient(160deg, #141414 0%, #050505 100%);
+            border: 1px solid var(--border);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
+            transform: translateZ(0);
+            cursor: grab;
+        }
+
+        .mzaCarousel-slide[data-state="active"] .mzaCard {
+            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(217, 177, 91, 0.12) inset;
+            border-color: rgba(217, 177, 91, 0.25);
+        }
+
+        .mzaCard-info {
+            flex: 1 1 52%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-width: 0;
+            min-height: 0;
+            max-height: 100%;
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(217, 177, 91, 0.4) transparent;
+            padding-right: 4px;
+        }
+
+        .mzaCard-info::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .mzaCard-info::-webkit-scrollbar-thumb {
+            background: rgba(217, 177, 91, 0.4);
+            border-radius: 999px;
+        }
+
+        .mzaCard-number {
+            color: var(--gold);
+            font-size: clamp(1.9rem, 2.6vw, 2.4rem);
+            font-weight: 800;
+            line-height: 1;
+            letter-spacing: -0.04em;
+        }
+
+        .mzaCard-title {
+            margin: 0.5rem 0 1.3rem;
+            color: var(--gold);
+            font-size: clamp(1.3rem, 2vw, 1.7rem);
+            font-weight: 700;
+            line-height: 1.25;
+        }
+
+        .mzaCard-dot {
+            display: block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--gold);
+            margin-bottom: 0.9rem;
+            flex-shrink: 0;
+        }
+
+        .mzaCard-text {
+            margin: 0;
+            color: rgba(255, 255, 255, 0.78);
+            font-size: 0.98rem;
+            line-height: 1.75;
+            max-width: 46ch;
+        }
+
+        .mzaCard-media {
+            flex: 1 1 42%;
+            border-radius: 16px;
+            overflow: hidden;
+            min-width: 0;
+            min-height: 0;
+        }
+
+        .mzaCard-media img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .mzaCarousel-controls {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            pointer-events: none;
+        }
+
+        .mzaCarousel-prev,
+        .mzaCarousel-next {
+            pointer-events: auto;
+            position: relative;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            border: 1px solid var(--border);
+            background: rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(6px);
+            color: var(--text-light);
+            font-size: 22px;
+            display: grid;
+            place-items: center;
+            cursor: pointer;
+            transition: background 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
+        }
+
+        .mzaCarousel-prev {
+            margin-left: 6px;
+        }
+
+        .mzaCarousel-next {
+            margin-right: 6px;
+        }
+
+        .mzaCarousel-prev:hover,
+        .mzaCarousel-next:hover {
+            background: rgba(217, 177, 91, 0.14);
+            border-color: rgba(217, 177, 91, 0.35);
+        }
+
+        .mzaCarousel-prev:active,
+        .mzaCarousel-next:active {
+            transform: scale(0.96);
+        }
+
+        .mzaCarousel-pagination {
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 14px;
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            align-items: center;
+            pointer-events: auto;
+        }
+
+        .mzaCarousel-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.25);
+            border: 0;
+            cursor: pointer;
+            transition: transform 0.2s ease, background 0.2s ease;
+        }
+
+        .mzaCarousel-dot[aria-selected="true"] {
+            background: var(--gold);
+            transform: scale(1.3);
+        }
+
+        .mzaCarousel-progress {
+            position: absolute;
+            left: 18px;
+            right: 18px;
+            bottom: 0;
+            height: 3px;
+            background: rgba(255, 255, 255, 0.08);
+            overflow: hidden;
+            border-radius: 999px;
+        }
+
+        .mzaCarousel-progressBar {
+            display: block;
+            height: 100%;
+            width: 100%;
+            transform-origin: left;
+            transform: scaleX(0);
+            will-change: transform;
+            background: linear-gradient(90deg, var(--gold-dark), var(--gold));
+        }
+
+        .mzaPar-1,
+        .mzaPar-2 {
+            will-change: transform;
+            transition: transform 500ms cubic-bezier(0.2, 0.7, 0, 1);
+        }
+
+        .mzaPar-1 {
+            transform: translate3d(calc(var(--mzaParX, 0px) * 0.2), calc(var(--mzaParY, 0px) * 0.2), 0);
+        }
+
+        .mzaPar-2 {
+            transform: translate3d(calc(var(--mzaParX, 0px) * 0.12), calc(var(--mzaParY, 0px) * 0.12), 0);
+        }
+
+        @media (max-width: 1000px) {
+            :root {
+                --mzaC-slideW: min(92vw, 640px);
+            }
+
+            .mzaCard {
+                flex-direction: column;
+                gap: 1.2rem;
+                padding: 24px;
+            }
+
+            .mzaCard-info {
+                min-height: 0;
+            }
+
+            .mzaCard-media {
+                flex: 0 0 auto;
+                height: 34%;
+                order: -1;
+            }
+
+            .mzaCard-text {
+                max-width: none;
+                /* trava em 6 linhas para nunca estourar a altura fixa do card
+                   em telas estreitas, não importa o tamanho do texto */
+                display: -webkit-box;
+                -webkit-line-clamp: 6;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+            }
+        }
+
+        @media (max-width: 560px) {
+            :root {
+                --mzaC-slideW: min(94vw, 480px);
+                --mzaCardH: clamp(420px, 78vh, 620px);
+            }
+
+            .mzaCarousel {
+                height: min(600px, 86vh);
+                padding: 0 8px;
+            }
+
+            .mzaCard-title {
+                font-size: 1.2rem;
+            }
+
+            .mzaCard-text {
+                font-size: 0.9rem;
+                -webkit-line-clamp: 5;
+            }
+
+            /* Abaixo de 560px o "peek" (margem de espiada ao redor do card)
+               fica menor que os botões de 44px — eles ficariam sobrepondo o
+               card. No celular a navegação já é por arraste + dots, então
+               escondemos as setas em vez de deixá-las por cima do conteúdo. */
+            .mzaCarousel-prev,
+            .mzaCarousel-next {
+                display: none;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .mzaCard {
+                padding: 18px;
+                gap: 0.9rem;
+            }
+
+            .mzaCard-number {
+                font-size: 1.6rem;
+            }
+
+            .mzaCard-title {
+                font-size: 1.05rem;
+                margin-bottom: 0.8rem;
+            }
+
+            .mzaCard-text {
+                -webkit-line-clamp: 4;
+            }
+        }
+
+        /* Celular deitado / janelas baixas: a altura vertical disponível
+           encolhe muito antes da largura — sem isso o texto ficaria cortado
+           de forma feia. Reduz o conteúdo progressivamente. */
+        @media (max-height: 560px) {
+            .mzaCarousel {
+                height: min(92vh, 460px);
+            }
+
+            .mzaCard {
+                flex-direction: row;
+                align-items: center;
+            }
+
+            .mzaCard-media {
+                height: 100%;
+                order: 0;
+            }
+
+            .mzaCard-text {
+                display: none;
+            }
+        }
+
+        @media (max-height: 380px) {
+            .mzaCard-dot {
+                display: none;
+            }
+
+            .mzaCard-media {
+                display: none;
+            }
+
+            .mzaCard-info {
+                justify-content: center;
+                align-items: flex-start;
+            }
+        }
+        /* ===== Seção 1: Portfólio de soluções ===== */
+        .portfolio-section {
+            position: relative;
+            overflow: hidden;
+            padding: 110px 0;
+        }
+
+        .portfolio-bg {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+        }
+
+        .portfolio-bg img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .portfolio-overlay {
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0.86) 0%, rgba(0, 0, 0, 0.93) 55%, #000000 100%);
+        }
+
+        .portfolio-inner {
+            position: relative;
+            z-index: 2;
+        }
+
+        .portfolio-intro {
+            max-width: 720px;
+            margin: 0 auto 3.5rem;
+            text-align: center;
+        }
+
+        .portfolio-intro .section-tag {
+            display: block;
+        }
+
+        .portfolio-intro h2 {
+            margin: 0;
+            color: var(--text-light);
+            font-size: clamp(2.1rem, 3.2vw, 3rem);
+            line-height: 1.12;
+            letter-spacing: -0.04em;
+        }
+
+        .portfolio-intro h2 strong {
+            color: var(--gold);
+            font-style: italic;
+        }
+
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.4rem;
+        }
+
+        .solution-card {
+            position: relative;
+            padding: clamp(1.6rem, 2.4vw, 2.3rem);
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(8px);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            transition: transform 0.35s ease, border-color 0.35s ease, background 0.35s ease;
+        }
+
+        .solution-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(217, 177, 91, 0.35);
+            background: rgba(217, 177, 91, 0.045);
+        }
+
+        .solution-number {
+            display: block;
+            color: var(--gold);
+            font-size: 0.85rem;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+        }
+
+        .solution-card h3 {
+            margin: 0.7rem 0 0.8rem;
+            color: var(--text-light);
+            font-size: 1.2rem;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+        }
+
+        .solution-card p {
+            margin: 0;
+            color: rgba(255, 255, 255, 0.68);
+            font-size: 0.94rem;
+            line-height: 1.75;
+        }
+
+        /* ===== Seção 2: Assessoria personalizada ===== */
+        .advisory-section {
+            padding: 100px 0;
+            background: var(--bg-dark);
+        }
+
+        .advisory-intro {
+            max-width: 640px;
+            margin: 0 auto 3.5rem;
+            text-align: center;
+        }
+
+        .advisory-intro h2 {
+            margin: 0;
+            color: var(--text-light);
+            font-size: clamp(2rem, 3vw, 2.7rem);
+            line-height: 1.15;
+            letter-spacing: -0.04em;
+        }
+
+        .advisory-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 1.2rem;
+        }
+
+        .tier-card {
+            display: flex;
+            flex-direction: column;
+            border-radius: 20px;
+            overflow: hidden;
+            background: var(--bg-dark-2);
+            border: 1px solid var(--border);
+            transition: transform 0.35s ease, border-color 0.35s ease;
+        }
+
+        .tier-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(217, 177, 91, 0.4);
+        }
+
+        .tier-media {
+            position: relative;
+            height: 150px;
+            overflow: hidden;
+        }
+
+        .tier-media img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .tier-media::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0) 40%, rgba(0, 0, 0, 0.55) 100%);
+        }
+
+        .tier-card:hover .tier-media img {
+            transform: scale(1.08);
+        }
+
+        .tier-body {
+            padding: 1.3rem 1.2rem 1.6rem;
+            flex: 1;
+        }
+
+        .tier-body h3 {
+            margin: 0 0 0.6rem;
+            color: var(--gold);
+            font-size: 1.15rem;
+            font-weight: 800;
+            font-style: italic;
+            letter-spacing: -0.01em;
+        }
+
+        .tier-body p {
+            margin: 0;
+            color: rgba(255, 255, 255, 0.68);
+            font-size: 0.86rem;
+            line-height: 1.6;
+        }
+
+        .tier-body p strong {
+            color: rgba(255, 255, 255, 0.92);
+            font-weight: 600;
+        }
+
+        /* ===== Seção 3: Sua jornada com a SIR ===== */
+        .journey-section {
+            padding: 100px 0 70px;
+            background: linear-gradient(180deg, #000000 0%, #0A0A0A 100%);
+        }
+
+        .journey-intro {
+            max-width: 640px;
+            margin: 0 auto 4rem;
+            text-align: center;
+        }
+
+        .journey-intro h2 {
+            margin: 0;
+            color: var(--text-light);
+            font-size: clamp(2.2rem, 3.4vw, 3.1rem);
+            letter-spacing: -0.04em;
+        }
+
+        .journey-steps {
+            position: relative;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.6rem;
+            --journey-progress: 0;
+        }
+
+        .journey-steps::before {
+            content: "";
+            position: absolute;
+            left: 6%;
+            right: 6%;
+            top: 26px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(217, 177, 91, 0.35) 8%, rgba(217, 177, 91, 0.35) 92%, transparent);
+        }
+
+        .journey-steps::after {
+            content: "";
+            position: absolute;
+            left: 6%;
+            top: 25px;
+            width: calc(88% * var(--journey-progress));
+            height: 3px;
+            border-radius: 999px;
+            background: var(--gold);
+            box-shadow: 0 0 12px rgba(217, 177, 91, 0.65);
+            transform-origin: left center;
+            pointer-events: none;
+        }
+
+        .journey-step {
+            position: relative;
+        }
+
+        .journey-step-number {
+            position: relative;
+            z-index: 1;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 52px;
+            height: 52px;
+            margin-bottom: 1.4rem;
+            border-radius: 50%;
+            background: var(--bg-dark-2);
+            border: 1px solid rgba(217, 177, 91, 0.35);
+            color: var(--gold);
+            font-size: 1.1rem;
+            font-weight: 800;
+        }
+
+        .journey-step-kicker {
+            display: block;
+            margin-bottom: 0.6rem;
+            color: var(--gold);
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+        }
+
+        .journey-step p {
+            margin: 0;
+            color: rgba(255, 255, 255, 0.68);
+            font-size: 0.94rem;
+            line-height: 1.7;
+            max-width: 30ch;
+        }
+
+        .journey-cta {
+            margin-top: 5rem;
+            padding: 2.6rem clamp(1.6rem, 4vw, 3.5rem);
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1.6rem;
+            border-radius: 24px;
+            background: linear-gradient(135deg, rgba(217, 177, 91, 0.1), rgba(217, 177, 91, 0.02));
+            border: 1px solid rgba(217, 177, 91, 0.25);
+        }
+
+        .journey-cta h3 {
+            margin: 0 0 0.4rem;
+            color: var(--text-light);
+            font-size: clamp(1.3rem, 2vw, 1.7rem);
+            letter-spacing: -0.02em;
+        }
+
+        .journey-cta p {
+            margin: 0;
+            color: rgba(255, 255, 255, 0.68);
+            font-size: 0.96rem;
+        }
+
+        /* ===== Seção 4: Footer institucional ===== */
+        .site-footer {
+            background: #000000;
+            border-top: 1px solid var(--border);
+            padding: 80px 0 0;
+        }
+
+        .footer-top {
+            display: grid;
+            grid-template-columns: 1.3fr 0.9fr 0.9fr 1fr;
+            gap: 2.5rem;
+            padding-bottom: 3.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .footer-brand p {
+            margin: 1.1rem 0 0;
+            max-width: 34ch;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.88rem;
+            line-height: 1.7;
+        }
+
+        .footer-logo {
+            display: inline-block;
+            color: var(--text-light);
+            font-size: 1.3rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+        }
+
+        .footer-logo strong {
+            color: var(--gold);
+        }
+
+        .footer-heading {
+            margin: 0 0 1.2rem;
+            color: var(--text-light);
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        .footer-links {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.65);
+            font-size: 0.92rem;
+            transition: color 0.2s ease, padding-left 0.2s ease;
+        }
+
+        .footer-links a:hover,
+        .footer-links a:focus-visible {
+            color: var(--gold);
+            padding-left: 4px;
+        }
+
+        .footer-contact-item {
+            display: block;
+            margin-bottom: 0.9rem;
+            color: rgba(255, 255, 255, 0.65);
+            font-size: 0.92rem;
+        }
+
+        .footer-contact-item a {
+            color: inherit;
+            transition: color 0.2s ease;
+        }
+
+        .footer-contact-item a:hover,
+        .footer-contact-item a:focus-visible {
+            color: var(--gold);
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 0.7rem;
+            margin-top: 1.4rem;
+        }
+
+        .footer-social a {
+            display: grid;
+            place-items: center;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            border: 1px solid var(--border);
+            color: rgba(255, 255, 255, 0.75);
+            font-size: 0.85rem;
+            transition: border-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+        }
+
+        .footer-social svg {
+            width: 19px;
+            height: 19px;
+            fill: currentColor;
+        }
+
+        .footer-social .instagram-icon {
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 1.8;
+        }
+
+        .footer-social a:hover,
+        .footer-social a:focus-visible {
+            border-color: var(--gold);
+            color: var(--gold);
+            transform: translateY(-2px);
+        }
+
+        .footer-legal {
+            padding: 2.2rem 0;
+            color: rgba(255, 255, 255, 0.38);
+            font-size: 0.74rem;
+            line-height: 1.75;
+            text-align: justify;
+        }
+
+        .footer-bottom {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            padding: 1.6rem 0 2.2rem;
+            border-top: 1px solid var(--border);
+            color: rgba(255, 255, 255, 0.45);
+            font-size: 0.82rem;
+        }
+
+        .footer-bottom a {
+            color: rgba(255, 255, 255, 0.45);
+            transition: color 0.2s ease;
+        }
+
+        .footer-bottom a:hover,
+        .footer-bottom a:focus-visible {
+            color: var(--gold);
+        }
+
+        @media (max-width: 900px) {
+            .portfolio-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .advisory-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .journey-steps {
+                grid-template-columns: repeat(2, 1fr);
+                row-gap: 2.6rem;
+            }
+
+            .journey-steps::before {
+                display: none;
+            }
+
+            .journey-steps::after {
+                display: none;
+            }
+
+            .journey-cta {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .footer-top {
+                grid-template-columns: 1fr 1fr;
+                row-gap: 2.4rem;
+            }
+
+            .footer-brand {
+                grid-column: 1 / -1;
+            }
+        }
+
+        @media (max-width: 560px) {
+            .portfolio-section {
+                padding: 80px 0;
+            }
+
+            .advisory-section,
+            .journey-section {
+                padding: 70px 0;
+            }
+
+            .advisory-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .journey-steps {
+                grid-template-columns: 1fr;
+                row-gap: 2.2rem;
+            }
+
+            .footer-top {
+                grid-template-columns: 1fr;
+                gap: 2.2rem;
+            }
+
+            .footer-brand {
+                grid-column: auto;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .footer-legal {
+                text-align: left;
+            }
+        }
+    </style>
+
+
+
+</head>
+
+<body>
+    <header class="site-header">
+        <div class="header-glow"></div>
+        <nav class="navbar container" aria-label="Menu principal">
+            <a href="#" class="brand" aria-label="Página inicial">
+                <img src="imagens/Logos-SIR-XP" alt="Logo da Sir Investimento" />
+            </a>
+
+            <button class="menu-toggle" aria-label="Abrir menu" aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+            <div class="nav-panel">
+                <ul class="nav-links">
+                    <li><a href="#">Início</a></li>
+                    <li><a href="#">Nossos assessores</a></li>
+                    <li><a href="#">Escritórios</a></li>
+                    <li><a href="#">Blog</a></li>
+                </ul>
+
+                <div class="nav-actions">
+                    <button class="btn btn-dark">Abrir conta</button>
+                    <button class="btn btn-gold">Seja assessor</button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div class="img-wrapper">
+            <a href="#" aria-label="Abrir conta">
+                <img src="imagens/img-hero.webp" alt="Família aproveitando o momento outdoors" />
+            </a>
+        </div>
+
+        <section class="about-section" aria-labelledby="about-title">
+            <div class="container about-inner">
+                <div class="gallery-masonry" aria-label="Galeria da empresa">
+                    <a href="#" class="gallery-card" data-height="small" aria-label="Imagem da empresa 1">
+                        <img src="imagens/gallary-img-1.webp" alt="Equipe de investimentos reunida" />
+                    </a>
+                    <a href="#" class="gallery-card" data-height="medium" aria-label="Imagem da empresa 2">
+                        <img src="imagens/gallery-img-2.webp" alt="Atendimento financeiro em escritório" />
+                    </a>
+                    <a href="#" class="gallery-card" data-height="tall" aria-label="Imagem da empresa 3">
+                        <img src="imagens/gallery-img-3.webp" alt="Clientes em conversa com consultores" />
+                    </a>
+                    <a href="#" class="gallery-card" data-height="small" aria-label="Imagem da empresa 4">
+                        <img src="imagens/gallery-img-4.webp" alt="Pessoa com documentos financeiros" />
+                    </a>
+                    <a href="#" class="gallery-card" data-height="medium" aria-label="Imagem da empresa 5">
+                        <img src="imagens/gallery0img-5.webp" alt="Consultoria financeira personalizada" />
+                    </a>
+                </div>
+
+                <div class="about-copy">
+                    <span class="section-tag">Nossa história</span>
+                    <h2 id="about-title">Somos um dos <strong><em>maiores escritórios</em></strong> de investimento do <strong><em>nordeste</em></strong></h2>
+
+                    <p>
+                        Nossa missão é orientar nossos clientes com estratégias e planos de longo prazo,
+                        para que alcancem seus objetivos e realizem seus sonhos.
+                    </p>
+
+                    <div class="gold-divider" aria-hidden="true"></div>
+
+                    <div class="stats" aria-label="Estatísticas da empresa">
+                        <div class="stat">
+                            <span class="stat-value" data-target="18" data-suffix=" anos">0</span>
+                            <span class="stat-label">de atuação no mercado</span>
+                        </div>
+
+                        <div class="stat">
+                            <span class="stat-value" data-target="3.7" data-decimals="1" data-suffix=" BI">0</span>
+                            <span class="stat-label">sob custódio</span>
+                        </div>
+
+                        <div class="stat">
+                            <span class="stat-value" data-target="5" data-prefix="+" data-suffix="K">0</span>
+                            <span class="stat-label">clientes</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-section" aria-label="Nossa linha do tempo">
+                <div class="timeline-scroll">
+                    <div class="timeline-pin">
+                        <div class="container">
+                            <p class="timeline-lead">São 18 anos dedicados a ajudar milhares de clientes com seus investimentos.</p>
+                        </div>
+
+                        <div class="timeline-track">
+                        <div class="timeline-item" data-year="2007">
+                            <span class="timeline-year">2007</span>
+                            <span class="timeline-dot" aria-hidden="true"></span>
+                            <p class="timeline-desc">Ano de fundação</p>
+                        </div>
+                        <div class="timeline-item" data-year="2011">
+                            <span class="timeline-year">2011</span>
+                            <span class="timeline-dot" aria-hidden="true"></span>
+                            <p class="timeline-desc">Credenciamento com a XP Investimentos</p>
+                        </div>
+                        <div class="timeline-item" data-year="2018">
+                            <span class="timeline-year">2018</span>
+                            <span class="timeline-dot" aria-hidden="true"></span>
+                            <p class="timeline-desc">Expansão para Natal e Recife</p>
+                        </div>
+                        <div class="timeline-item" data-year="2019">
+                            <span class="timeline-year">2019</span>
+                            <span class="timeline-dot" aria-hidden="true"></span>
+                            <p class="timeline-desc">Expansão para Mossoró e Caruaru</p>
+                        </div>
+                        <div class="timeline-item" data-year="2019">
+                            <span class="timeline-year">2019</span>
+                            <span class="timeline-dot" aria-hidden="true"></span>
+                            <p class="timeline-desc">Instauração da governança corporativa e conselho deliberativo</p>
+                        </div>
+                        <div class="timeline-item" data-year="2020">
+                            <span class="timeline-year">2020</span>
+                            <span class="timeline-dot" aria-hidden="true"></span>
+                            <p class="timeline-desc">Criação das áreas de apoio</p>
+                        </div>
+                        <div class="timeline-item" data-year="2024">
+                            <span class="timeline-year">2024</span>
+                            <span class="timeline-dot" aria-hidden="true"></span>
+                            <p class="timeline-desc">Conquista de R$ 2,7 bi sob custódia e de +5 mil clientes</p>
+                        </div>
+                        <div class="timeline-item" data-year="2025">
+                            <span class="timeline-year">2025</span>
+                            <span class="timeline-dot" aria-hidden="true"></span>
+                            <p class="timeline-desc">Conquista de R$ 3 bi sob custódia</p>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="satisfaction-section" aria-label="Satisfação dos clientes">
+            <div class="container satisfaction-inner">
+                <div class="nps-side">
+                    <div class="nps-ring-wrap">
+                        <svg class="nps-svg" viewBox="0 0 220 220" aria-label="NPS 92 porcento">
+                            <defs>
+                                <linearGradient id="npsGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#f9e6ae" />
+                                    <stop offset="20%" stop-color="#d9b15b" />
+                                    <stop offset="50%" stop-color="#f6d98b" />
+                                    <stop offset="100%" stop-color="#b88d39" />
+                                </linearGradient>
+                            </defs>
+                            <circle class="nps-track" cx="110" cy="110" r="90"></circle>
+                            <circle class="nps-progress" cx="110" cy="110" r="90"></circle>
+                        </svg>
+
+                        <div class="nps-center">
+                            <div>
+                                <span class="nps-label">NPS</span>
+                                <span class="nps-value" data-target="92">0%</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="nps-text">
+                        <h2 class="nps-title">SATISFAÇÃO<strong>!</strong></h2>
+                        <p class="nps-subtitle">
+                            <strong>Temos um número para isso!</strong>
+                            <br>
+                            O Net Promoter Score, ou NPS, é uma metodologia que mede a satisfação dos clientes em empresas de todos os segmentos.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="testimonial-content">
+                    <div class="testimonial-header">
+                        <h3>O que nossos clientes dizem</h3>
+                    </div>
+
+                    <div class="testimonial-card" aria-live="polite">
+                        <div class="testimonial-quote">
+                            <span class="testimonial-mark">“</span>
+                            <p class="testimonial-copy" id="testimonial-copy">
+                                Meu assessor percebe minhas necessidades de investimento e sugere as aplicações de acordo com o cenário econômico.
+                            </p>
+                        </div>
+
+                        <div class="testimonial-person">
+                            <img class="testimonial-avatar" id="testimonial-avatar" src="imagens/img-testimonial-1.webp" alt="Rodrigo Guedes" />
+                            <div class="testimonial-meta">
+                                <span class="testimonial-client">Cliente do</span>
+                                <div>
+                                    <span class="testimonial-role" id="testimonial-role">Assessor</span>
+                                    <span class="testimonial-name" id="testimonial-name">Rodrigo Guedes</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="testimonial-stars" aria-label="Avaliação de 5 estrelas">★★★★★</div>
+
+                        <div class="testimonial-controls">
+                            <div class="testimonial-nav">
+                                <button class="nav-arrow" type="button" aria-label="Depoimento anterior" data-direction="prev">‹</button>
+                                <button class="nav-arrow" type="button" aria-label="Próximo depoimento" data-direction="next">›</button>
+                            </div>
+
+                            <div class="testimonial-dots" aria-label="Seleção de depoimentos">
+                                <button class="is-active" type="button" aria-label="Depoimento 1"></button>
+                                <button type="button" aria-label="Depoimento 2"></button>
+                                <button type="button" aria-label="Depoimento 3"></button>
+                                <button type="button" aria-label="Depoimento 4"></button>
+                                <button type="button" aria-label="Depoimento 5"></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="differentials-section" aria-label="Nossos diferenciais">
+            <div class="container differentials-intro">
+                <span class="section-tag">Por que escolher a Sir</span>
+                <h2>Nossos <strong><em>diferenciais</em></strong></h2>
+            </div>
+
+            <div class="mzaCarousel" id="mzaCarousel" aria-roledescription="carrossel" aria-label="Nossos diferenciais">
+                <div class="mzaCarousel-viewport" tabindex="0">
+                    <div class="mzaCarousel-track">
+                        <article class="mzaCarousel-slide" role="group" aria-roledescription="slide" aria-label="1 de 5">
+                            <div class="mzaCard">
+                                <div class="mzaCard-info mzaPar-1">
+                                    <span class="mzaCard-number">01</span>
+                                    <h3 class="mzaCard-title">Renda Variável</h3>
+                                    <span class="mzaCard-dot" aria-hidden="true"></span>
+                                    <p class="mzaCard-text">Temos especialistas dedicados exclusivamente à bolsa de valores e aos produtos de renda variável, estudando diariamente o mercado e acompanhando as operações de nossos clientes.</p>
+                                </div>
+                                <div class="mzaCard-media mzaPar-2">
+                                    <img src="imagens/diferencial-img-1.webp" alt="Renda Variável" loading="lazy">
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="mzaCarousel-slide" role="group" aria-roledescription="slide" aria-label="2 de 5">
+                            <div class="mzaCard">
+                                <div class="mzaCard-info mzaPar-1">
+                                    <span class="mzaCard-number">02</span>
+                                    <h3 class="mzaCard-title">Auxiliamos suas alocações</h3>
+                                    <span class="mzaCard-dot" aria-hidden="true"></span>
+                                    <p class="mzaCard-text">Dedicamos um time de assessores especialistas em análises de carteiras de investimentos, produtos financeiros e cenários econômicos para auxiliar os clientes a tomar as melhores decisões.</p>
+                                </div>
+                                <div class="mzaCard-media mzaPar-2">
+                                    <img src="imagens/diferencial-img-2.webp" alt="Auxiliamos suas alocações" loading="lazy">
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="mzaCarousel-slide" role="group" aria-roledescription="slide" aria-label="3 de 5">
+                            <div class="mzaCard">
+                                <div class="mzaCard-info mzaPar-1">
+                                    <span class="mzaCard-number">03</span>
+                                    <h3 class="mzaCard-title">Satisfação dos clientes</h3>
+                                    <span class="mzaCard-dot" aria-hidden="true"></span>
+                                    <p class="mzaCard-text">É com orgulho que podemos dizer que possuímos nota 92 no Net Promoter Score, métrica utilizada pelas maiores empresas do mundo para medir a satisfação de seus clientes.</p>
+                                </div>
+                                <div class="mzaCard-media mzaPar-2">
+                                    <img src="imagens/diferencial-img-3.webp" alt="Satisfação dos clientes" loading="lazy">
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="mzaCarousel-slide" role="group" aria-roledescription="slide" aria-label="4 de 5">
+                            <div class="mzaCard">
+                                <div class="mzaCard-info mzaPar-1">
+                                    <span class="mzaCard-number">04</span>
+                                    <h3 class="mzaCard-title">Perto de você</h3>
+                                    <span class="mzaCard-dot" aria-hidden="true"></span>
+                                    <p class="mzaCard-text">Além do cuidado nos atendimentos virtuais, possuímos cinco escritórios físicos pelo nordeste para melhor atender nossos clientes.</p>
+                                </div>
+                                <div class="mzaCard-media mzaPar-2">
+                                    <img src="imagens/diferencial-img-4.webp" alt="Perto de você" loading="lazy">
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="mzaCarousel-slide" role="group" aria-roledescription="slide" aria-label="5 de 5">
+                            <div class="mzaCard">
+                                <div class="mzaCard-info mzaPar-1">
+                                    <span class="mzaCard-number">05</span>
+                                    <h3 class="mzaCard-title">BackOffice eficiente</h3>
+                                    <span class="mzaCard-dot" aria-hidden="true"></span>
+                                    <p class="mzaCard-text">Na retaguarda de todos os nossos atendimentos, nosso setor operacional trabalha na conferência de valores e operações, correção e criação de processos, realização de reservas, abertura de contas e muito mais para que o acompanhamento dos nossos clientes seja sempre o melhor.</p>
+                                </div>
+                                <div class="mzaCard-media mzaPar-2">
+                                    <img src="imagens/diferencial-img-5.webp" alt="BackOffice eficiente" loading="lazy">
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+
+                <div class="mzaCarousel-controls" aria-label="Controles">
+                    <button class="mzaCarousel-prev" aria-label="Slide anterior" type="button">‹</button>
+                    <button class="mzaCarousel-next" aria-label="Próximo slide" type="button">›</button>
+                </div>
+                <div class="mzaCarousel-pagination" role="tablist" aria-label="Navegação dos slides"></div>
+                <div class="mzaCarousel-progress" aria-hidden="true"><span class="mzaCarousel-progressBar"></span></div>
+            </div>
+        </section>
+
+        <section class="portfolio-section" aria-label="Portfólio de soluções">
+            <div class="portfolio-bg" aria-hidden="true">
+                <img src="imagens/img-fundo-sessão-portfolio" alt="">
+            </div>
+            <div class="portfolio-overlay" aria-hidden="true"></div>
+
+            <div class="container portfolio-inner">
+                <div class="portfolio-intro">
+                    <span class="section-tag">Soluções</span>
+                    <h2>Um <strong><em>portfólio completo</em></strong> de soluções e serviços financeiros para seus <strong><em>sonhos e objetivos</em></strong></h2>
+                </div>
+
+                <div class="portfolio-grid">
+                    <div class="solution-card">
+                        <span class="solution-number">01</span>
+                        <h3>Previdência</h3>
+                        <p>Auxiliamos na estruturação de estratégias de previdência privada com foco em benefícios fiscais, sempre respeitando o perfil e os objetivos de cada cliente.</p>
+                    </div>
+
+                    <div class="solution-card">
+                        <span class="solution-number">02</span>
+                        <h3>Soluções Financeiras</h3>
+                        <p>Apresentamos soluções financeiras alinhadas às suas necessidades, incluindo crédito com garantia, soluções imobiliárias, antecipação de precatórios e recebíveis, além de imóveis com garantia.</p>
+                    </div>
+
+                    <div class="solution-card">
+                        <span class="solution-number">03</span>
+                        <h3>Mercado Internacional</h3>
+                        <p>Orientamos sobre alternativas de investimento no mercado internacional, como ações, títulos públicos e privados, REITs, fundos de investimento e ETFs, com diversificação global.</p>
+                    </div>
+
+                    <div class="solution-card">
+                        <span class="solution-number">04</span>
+                        <h3>Patrimônio e Sucessão</h3>
+                        <p>Oferecemos suporte na estruturação do seu patrimônio financeiro e sucessório, considerando aspectos tributários com orientações alinhadas aos objetivos de cada cliente.</p>
+                    </div>
+
+                    <div class="solution-card">
+                        <span class="solution-number">05</span>
+                        <h3>Investimentos</h3>
+                        <p>Apresentamos alternativas de investimento alinhadas ao seu perfil, incluindo renda fixa, fundos de investimento, títulos públicos, ações, entre outros.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="advisory-section" aria-label="Assessoria personalizada">
+            <div class="container">
+                <div class="advisory-intro">
+                    <span class="section-tag">Assessoria personalizada</span>
+                    <h2>Encontre a faixa de assessoria perfeita para o seu objetivo</h2>
+                </div>
+
+                <div class="advisory-grid">
+                    <div class="tier-card">
+                        <div class="tier-media">
+                            <img src="imagens/img-exclusive" alt="Exclusive" loading="lazy">
+                        </div>
+                        <div class="tier-body">
+                            <h3>Exclusive</h3>
+                            <p>Faixa de assessoria para <strong>investimentos a partir de R$100 mil a R$300 mil.</strong></p>
+                        </div>
+                    </div>
+
+                    <div class="tier-card">
+                        <div class="tier-media">
+                            <img src="imagens/img-signature" alt="Signature" loading="lazy">
+                        </div>
+                        <div class="tier-body">
+                            <h3>Signature</h3>
+                            <p>Faixa de assessoria para <strong>investimentos a partir de R$300 mil a R$3 milhões.</strong></p>
+                        </div>
+                    </div>
+
+                    <div class="tier-card">
+                        <div class="tier-media">
+                            <img src="imagens/img-uinique.png" alt="Unique" loading="lazy">
+                        </div>
+                        <div class="tier-body">
+                            <h3>Unique</h3>
+                            <p>Faixa de assessoria para <strong>investimentos a partir de R$3 milhões a R$10 milhões.</strong></p>
+                        </div>
+                    </div>
+
+                    <div class="tier-card">
+                        <div class="tier-media">
+                            <img src="imagens/img-private" alt="Private" loading="lazy">
+                        </div>
+                        <div class="tier-body">
+                            <h3>Private</h3>
+                            <p>Faixa de assessoria para <strong>investimentos acima de R$10 milhões.</strong></p>
+                        </div>
+                    </div>
+
+                    <div class="tier-card">
+                        <div class="tier-media">
+                            <img src="imagens/img-empresas" alt="Empresas" loading="lazy">
+                        </div>
+                        <div class="tier-body">
+                            <h3>Empresas</h3>
+                            <p>Soluções para <strong>pessoas jurídicas e negócios.</strong></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="journey-section" aria-label="Sua jornada com a Sir">
+            <div class="container">
+                <div class="journey-intro">
+                    <span class="section-tag">Sua jornada</span>
+                    <h2>Com a <strong><em>Sir</em></strong></h2>
+                </div>
+
+                <div class="journey-steps">
+                    <div class="journey-step">
+                        <span class="journey-step-number">01</span>
+                        <span class="journey-step-kicker">Seu momento atual</span>
+                        <p>Seu primeiro passo com a Sir será entender o seu cenário patrimonial atual, objetivos e perfil investidor.</p>
+                    </div>
+
+                    <div class="journey-step">
+                        <span class="journey-step-number">02</span>
+                        <span class="journey-step-kicker">Propostas e soluções</span>
+                        <p>Com acompanhamento de nossos especialistas, apresentamos soluções e alternativas para os seus objetivos.</p>
+                    </div>
+
+                    <div class="journey-step">
+                        <span class="journey-step-number">03</span>
+                        <span class="journey-step-kicker">Sua decisão em prática</span>
+                        <p>Com o seu plano definido, implementamos as soluções decididas por você.</p>
+                    </div>
+
+                    <div class="journey-step">
+                        <span class="journey-step-number">04</span>
+                        <span class="journey-step-kicker">Acompanhamento</span>
+                        <p>Os seus investimentos seguirão sendo monitorados com estratégia!</p>
+                    </div>
+                </div>
+
+                <div class="journey-cta">
+                    <div>
+                        <h3>Vamos marcar uma reunião?</h3>
+                        <p>Estamos à disposição para lhe acompanhar em sua jornada no mercado financeiro.</p>
+                    </div>
+                    <a href="#" class="btn btn-gold">Fale com nossos assessores</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer" aria-label="Rodapé institucional">
+        <div class="container">
+            <div class="footer-top">
+                <div class="footer-brand">
+                    <span class="footer-logo">Sir <strong>Investimentos</strong></span>
+                    <p>Escritório credenciado à XP Investimentos. Assessoria de investimentos no Nordeste do Brasil.</p>
+
+                    <div class="footer-social">
+                        <a href="https://www.instagram.com/sirinvestimentos/" aria-label="Instagram da Sir Investimentos" target="_blank" rel="noopener noreferrer">
+                            <svg class="instagram-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                                <rect x="3" y="3" width="18" height="18" rx="5"></rect>
+                                <circle cx="12" cy="12" r="4.2"></circle>
+                                <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"></circle>
+                            </svg>
+                        </a>
+                        <a href="https://wa.me/558330035909" aria-label="WhatsApp da Sir Investimentos" target="_blank" rel="noopener noreferrer">
+                            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                                <path d="M12 2.5a9.5 9.5 0 0 0-8.2 14.3L2.5 21.5l4.9-1.3A9.5 9.5 0 1 0 12 2.5Zm0 17.2a7.7 7.7 0 0 1-3.9-1.1l-.3-.2-2.9.8.8-2.8-.2-.3A7.7 7.7 0 1 1 12 19.7Zm4.2-5.6c-.2-.1-1.3-.6-1.5-.7-.2-.1-.4-.1-.5.1-.2.2-.6.7-.7.8-.1.2-.3.2-.5.1a6.3 6.3 0 0 1-1.8-1.1 6.8 6.8 0 0 1-1.2-1.5c-.1-.2 0-.3.1-.4l.4-.5c.1-.1.1-.2.2-.4v-.3c0-.1-.5-1.2-.7-1.7-.2-.4-.4-.4-.5-.4h-.4c-.1 0-.4.1-.6.3-.2.2-.8.8-.8 1.9s.8 2.2.9 2.4c.1.2 1.6 2.5 3.8 3.4.5.2.9.4 1.2.5.5.1 1 .1 1.4.1.4-.1 1.3-.5 1.4-1 .2-.5.2-1 .1-1.1Z"></path>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="footer-nav">
+                    <h4 class="footer-heading">Institucional</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Início</a></li>
+                        <li><a href="#">Nossos assessores</a></li>
+                        <li><a href="#">Escritórios</a></li>
+                        <li><a href="#">Blog</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-nav">
+                    <h4 class="footer-heading">Comece agora</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Abra sua conta</a></li>
+                        <li><a href="#">Seja assessor</a></li>
+                        <li><a href="#">Política de privacidade</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-contact">
+                    <h4 class="footer-heading">Contatos</h4>
+                    <span class="footer-contact-item"><a href="tel:+558330035909">(83) 3003-5909</a></span>
+                    <span class="footer-contact-item"><a href="mailto:contato@sirinvestimentos.com.br">contato@sirinvestimentos.com.br</a></span>
+                </div>
+            </div>
+
+            <p class="footer-legal">
+                A SIR Assessoria de Investimentos LTDA, inscrita sob o CNPJ: 12.594.382/0001-08, é uma empresa de Assessoria de Investimento devidamente registrada na Comissão de Valores Mobiliários na forma da Resolução CVM 178/23 ("Sociedade"), que mantém contrato de distribuição de produtos financeiros com a XP Investimentos Corretora de Câmbio, Títulos e Valores Mobiliários S.A. ("XP") e pode, por conta e ordem dos seus clientes, operar no mercado de capitais segundo a legislação vigente. Na forma da legislação da CVM, o Assessor de Investimento não pode administrar ou gerir o patrimônio de investidores. O investimento em ações é um investimento de risco e rentabilidade passada não é garantia de rentabilidade futura. Na realização de operações com derivativos existe a possibilidade de perdas superiores aos valores investidos, podendo resultar em significativas perdas patrimoniais. Para informações e dúvidas sobre produtos, contate seu assessor de investimentos. Para reclamações, contate a Ouvidoria da XP pelo telefone 0800 722 3730.
+            </p>
+
+            <div class="footer-bottom">
+                <span>Copyright © 2026 Sir Investimentos. Todos os direitos reservados.</span>
+                <a href="#">Política de privacidade</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Linha do tempo: no desktop, ".timeline-pin" gruda na tela via CSS
+        // (position: sticky) enquanto ".timeline-scroll" (altura extra, calculada
+        // abaixo) é percorrida — o JS só translada a trilha em X conforme o
+        // progresso do scroll (scrub), sem usar o pin do GSAP. No mobile, vira
+        // uma faixa com scroll horizontal nativo por toque.
+        (() => {
+            const scrollWrap = document.querySelector('.timeline-scroll');
+            const pin = document.querySelector('.timeline-pin');
+            const track = document.querySelector('.timeline-track');
+            if (!scrollWrap || !pin || !track) return;
+
+            const items = [...track.querySelectorAll('.timeline-item')];
+            const mm = gsap.matchMedia();
+
+            mm.add('(min-width: 901px)', () => {
+                const setActive = (progress) => {
+                    const index = Math.round(progress * (items.length - 1));
+                    items.forEach((item, i) => item.classList.toggle('is-active', i === index));
+                };
+
+                const setScrollDistance = () => {
+                    const extra = Math.max(track.scrollWidth - pin.clientWidth, 0);
+                    scrollWrap.style.height = `calc(100vh + ${extra}px)`;
+                };
+                setScrollDistance();
+
+                const tween = gsap.to(track, {
+                    x: () => -Math.max(track.scrollWidth - pin.clientWidth, 0),
+                    ease: 'none',
+                    scrollTrigger: {
+                        trigger: scrollWrap,
+                        start: 'top top',
+                        end: 'bottom bottom',
+                        scrub: true,
+                        invalidateOnRefresh: true,
+                        onRefresh: setScrollDistance,
+                        onUpdate: (self) => setActive(self.progress)
+                    }
+                });
+
+                setActive(0);
+                window.addEventListener('resize', setScrollDistance);
+
+                return () => {
+                    window.removeEventListener('resize', setScrollDistance);
+                    tween.scrollTrigger && tween.scrollTrigger.kill();
+                    tween.kill();
+                    gsap.set(track, { clearProps: 'x' });
+                    scrollWrap.style.height = '';
+                };
+            });
+
+            mm.add('(max-width: 900px)', () => {
+                items.forEach((item) => item.classList.add('is-active'));
+            });
+        })();
+
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navPanel = document.querySelector('.nav-panel');
+
+        if (menuToggle && navPanel) {
+            const applyMenuState = (isOpen) => {
+                navPanel.classList.toggle('open', isOpen);
+                menuToggle.classList.toggle('active', isOpen);
+                menuToggle.setAttribute('aria-expanded', String(isOpen));
+                navPanel.style.display = isOpen ? 'flex' : 'none';
+            };
+
+            menuToggle.addEventListener('click', (event) => {
+                event.preventDefault();
+                const isOpen = !navPanel.classList.contains('open');
+                applyMenuState(isOpen);
+            });
+
+            const mediaQuery = window.matchMedia('(max-width: 900px)');
+            const syncMenuState = () => {
+                if (!mediaQuery.matches) {
+                    navPanel.style.display = '';
+                    navPanel.classList.remove('open');
+                    menuToggle.classList.remove('active');
+                    menuToggle.setAttribute('aria-expanded', 'false');
+                }
+            };
+
+            mediaQuery.addEventListener('change', syncMenuState);
+            syncMenuState();
+        }
+
+        const galleryCards = document.querySelectorAll('.gallery-card');
+        galleryCards.forEach((card) => {
+            card.addEventListener('click', (event) => {
+                event.preventDefault();
+                galleryCards.forEach((item) => item.classList.remove('is-open'));
+                card.classList.add('is-open');
+            });
+        });
+
+        gsap.from('.gallery-card', {
+            y: 30,
+            opacity: 0,
+            duration: 0.85,
+            stagger: 0.12,
+            ease: 'power2.out',
+            scrollTrigger: {
+                trigger: '.about-section',
+                start: 'top 78%'
+            }
+        });
+
+        gsap.from('.about-copy > *', {
+            y: 24,
+            opacity: 0,
+            duration: 0.7,
+            stagger: 0.12,
+            ease: 'power2.out',
+            scrollTrigger: {
+                trigger: '.about-copy',
+                start: 'top 80%'
+            }
+        });
+
+        const counters = document.querySelectorAll('.stat-value');
+
+        counters.forEach((counter) => {
+            const target = Number(counter.dataset.target || 0);
+            const decimals = Number(counter.dataset.decimals || 0);
+            const prefix = counter.dataset.prefix || '';
+            const suffix = counter.dataset.suffix || '';
+            const value = { current: 0 };
+
+            gsap.to(value, {
+                current: target,
+                duration: 2.2,
+                ease: 'power2.out',
+                scrollTrigger: {
+                    trigger: counter,
+                    start: 'top 90%'
+                },
+                onUpdate: () => {
+                    const formatted = decimals > 0 ? value.current.toFixed(decimals) : Math.round(value.current);
+                    counter.textContent = `${prefix}${formatted}${suffix}`;
+                }
+            });
+        });
+
+        const npsValue = document.querySelector('.nps-value');
+        const npsProgress = document.querySelector('.nps-progress');
+        const npsCircleLength = 2 * Math.PI * 90;
+
+        if (npsProgress) {
+            gsap.set(npsProgress, {
+                strokeDasharray: npsCircleLength,
+                strokeDashoffset: npsCircleLength
+            });
+
+            gsap.to(npsProgress, {
+                strokeDashoffset: npsCircleLength * (1 - 0.92),
+                duration: 2.2,
+                ease: 'power2.out',
+                scrollTrigger: {
+                    trigger: '.satisfaction-section',
+                    start: 'top 80%',
+                    once: true
+                }
+            });
+        }
+
+        if (npsValue) {
+            const value = { current: 0 };
+            gsap.set(npsValue, { textContent: '0%' });
+
+            gsap.to(value, {
+                current: 92,
+                duration: 2.1,
+                ease: 'power2.out',
+                scrollTrigger: {
+                    trigger: '.satisfaction-section',
+                    start: 'top 80%',
+                    once: true
+                },
+                onUpdate: () => {
+                    const formatted = Math.round(value.current);
+                    npsValue.textContent = `${formatted}%`;
+                }
+            });
+        }
+
+        // Animações de entrada das novas seções (mesmo padrão do resto do site)
+        gsap.from('.solution-card', {
+            y: 24,
+            opacity: 0,
+            duration: 0.7,
+            stagger: 0.1,
+            ease: 'power2.out',
+            scrollTrigger: {
+                trigger: '.portfolio-grid',
+                start: 'top 82%'
+            }
+        });
+
+        gsap.from('.tier-card', {
+            y: 24,
+            opacity: 0,
+            duration: 0.7,
+            stagger: 0.1,
+            ease: 'power2.out',
+            scrollTrigger: {
+                trigger: '.advisory-grid',
+                start: 'top 82%'
+            }
+        });
+
+        const journeyMotion = gsap.matchMedia();
+
+        journeyMotion.add('(min-width: 901px)', () => {
+            const journeyProgress = gsap.to('.journey-steps', {
+                '--journey-progress': 1,
+                ease: 'none',
+                scrollTrigger: {
+                    trigger: '.journey-steps',
+                    start: 'top 72%',
+                    end: 'bottom 42%',
+                    scrub: 0.8,
+                    invalidateOnRefresh: true
+                }
+            });
+
+            return () => journeyProgress.kill();
+        });
+
+        gsap.from('.journey-step', {
+            y: 24,
+            opacity: 0,
+            duration: 0.7,
+            stagger: 0.14,
+            ease: 'power2.out',
+            scrollTrigger: {
+                trigger: '.journey-steps',
+                start: 'top 82%'
+            }
+        });
+
+        gsap.from('.journey-cta', {
+            y: 20,
+            opacity: 0,
+            duration: 0.7,
+            ease: 'power2.out',
+            scrollTrigger: {
+                trigger: '.journey-cta',
+                start: 'top 88%'
+            }
+        });
+
+        gsap.from('.footer-top > *', {
+            y: 18,
+            opacity: 0,
+            duration: 0.7,
+            stagger: 0.08,
+            ease: 'power2.out',
+            scrollTrigger: {
+                trigger: '.site-footer',
+                start: 'top 90%'
+            }
+        });
+
+        const testimonials = [
+            {
+                name: 'Rodrigo Guedes',
+                role: 'Assessor',
+                avatar: 'imagens/img-testimonial-1.webp',
+                text: 'Meu assessor percebe minhas necessidades de investimento e sugere as aplicações de acordo com o cenário econômico.'
+            },
+            {
+                name: 'Mariana Teixeira',
+                role: 'Assessora',
+                avatar: 'imagens/img-testemonial-2.webp',
+                text: 'A orientação foi clara, objetiva e sempre alinhada aos meus objetivos financeiros de longo prazo.'
+            },
+            {
+                name: 'Claudione Melo',
+                role: 'Assessora',
+                avatar: 'imagens/img-testemonial-3.webp',
+                text: 'Senti confiança desde o início. O planejamento foi pensado para meu perfil e para minha realidade.'
+            },
+            {
+                name: 'Jackson Antunes',
+                role: 'Assessor',
+                avatar: 'imagens/img-testemonial-4.webp',
+                text: 'O acompanhamento fez toda a diferença na forma como organizei meus investimentos e meus próximos passos.'
+            },
+            {
+                name: 'Andre Serejo',
+                role: 'Assessor',
+                avatar: 'imagens/img-testemonial-5.webp',
+                text: 'A assessoria me ajudou a tomar decisões com mais segurança, previsibilidade e visão de futuro.'
+            }
+        ];
+
+        const testimonialAvatar = document.getElementById('testimonial-avatar');
+        const testimonialName = document.getElementById('testimonial-name');
+        const testimonialRole = document.getElementById('testimonial-role');
+        const testimonialCopy = document.getElementById('testimonial-copy');
+        const dots = [...document.querySelectorAll('.testimonial-dots button')];
+        const navButtons = [...document.querySelectorAll('.nav-arrow')];
+        let currentSlide = 0;
+
+        const renderTestimonial = (index) => {
+            const item = testimonials[index];
+            testimonialAvatar.src = item.avatar;
+            testimonialAvatar.alt = item.name;
+            testimonialName.textContent = item.name;
+            testimonialRole.textContent = item.role;
+            testimonialCopy.textContent = item.text;
+
+            dots.forEach((dot, dotIndex) => {
+                dot.classList.toggle('is-active', dotIndex === index);
+            });
+        };
+
+        navButtons.forEach((button) => {
+            button.addEventListener('click', () => {
+                const direction = button.dataset.direction === 'next' ? 1 : -1;
+                currentSlide = (currentSlide + direction + testimonials.length) % testimonials.length;
+                renderTestimonial(currentSlide);
+            });
+        });
+
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                currentSlide = index;
+                renderTestimonial(currentSlide);
+            });
+        });
+    </script>
+
+    <script>
+        // Carrossel 3D dos "Nossos diferenciais"
+        class MzaCarousel {
+            constructor(root, opts = {}) {
+                this.root = root;
+                this.viewport = root.querySelector('.mzaCarousel-viewport');
+                this.track = root.querySelector('.mzaCarousel-track');
+                this.slides = Array.from(root.querySelectorAll('.mzaCarousel-slide'));
+                this.prevBtn = root.querySelector('.mzaCarousel-prev');
+                this.nextBtn = root.querySelector('.mzaCarousel-next');
+                this.pagination = root.querySelector('.mzaCarousel-pagination');
+                this.progressBar = root.querySelector('.mzaCarousel-progressBar');
+                this.isFF = typeof InstallTrigger !== 'undefined';
+                this.n = this.slides.length;
+                this.state = {
+                    index: 0,
+                    pos: 0,
+                    width: 0,
+                    height: 0,
+                    gap: 28,
+                    dragging: false,
+                    pointerId: null,
+                    x0: 0,
+                    v: 0,
+                    t0: 0,
+                    animating: false,
+                    hovering: false,
+                    startTime: 0,
+                    pausedAt: 0,
+                    rafId: 0
+                };
+                this.opts = Object.assign({
+                    gap: 28,
+                    peek: 0.15,
+                    rotateY: 30,
+                    zDepth: 140,
+                    scaleDrop: 0.09,
+                    blurMax: 2.0,
+                    activeLeftBias: 0,
+                    interval: 5200,
+                    transitionMs: 900,
+                    keyboard: true,
+                    breakpoints: [
+                        { mq: '(max-width: 1200px)', gap: 24, peek: 0.12, rotateY: 24, zDepth: 110, scaleDrop: 0.08, activeLeftBias: 0 },
+                        { mq: '(max-width: 1000px)', gap: 18, peek: 0.09, rotateY: 18, zDepth: 90, scaleDrop: 0.07, activeLeftBias: 0 },
+                        { mq: '(max-width: 768px)', gap: 14, peek: 0.06, rotateY: 14, zDepth: 70, scaleDrop: 0.06, activeLeftBias: 0 },
+                        { mq: '(max-width: 560px)', gap: 12, peek: 0.05, rotateY: 10, zDepth: 60, scaleDrop: 0.05, activeLeftBias: 0 }
+                    ]
+                }, opts);
+                if (this.isFF) {
+                    this.opts.rotateY = 8;
+                    this.opts.zDepth = 0;
+                    this.opts.blurMax = 0;
+                }
+                this._init();
+            }
+            _init() {
+                this._setupDots();
+                this._bind();
+                this._measure();
+                this.goTo(0, false);
+                this._startCycle();
+                this._loop();
+            }
+            _setupDots() {
+                this.pagination.innerHTML = '';
+                this.dots = this.slides.map((_, i) => {
+                    const b = document.createElement('button');
+                    b.type = 'button';
+                    b.className = 'mzaCarousel-dot';
+                    b.setAttribute('role', 'tab');
+                    b.setAttribute('aria-label', `Ir para o slide ${i + 1}`);
+                    b.addEventListener('click', () => { this.goTo(i); });
+                    this.pagination.appendChild(b);
+                    return b;
+                });
+            }
+            _bind() {
+                this.prevBtn.addEventListener('click', () => { this.prev(); });
+                this.nextBtn.addEventListener('click', () => { this.next(); });
+                if (this.opts.keyboard) {
+                    this.root.addEventListener('keydown', (e) => {
+                        if (e.key === 'ArrowLeft') this.prev();
+                        if (e.key === 'ArrowRight') this.next();
+                    });
+                }
+                const pe = this.viewport;
+                pe.addEventListener('pointerdown', (e) => this._onDragStart(e));
+                pe.addEventListener('pointermove', (e) => this._onDragMove(e));
+                pe.addEventListener('pointerup', (e) => this._onDragEnd(e));
+                pe.addEventListener('pointercancel', (e) => this._onDragEnd(e));
+                this.root.addEventListener('mouseenter', () => {
+                    this.state.hovering = true;
+                    this.state.pausedAt = performance.now();
+                });
+                this.root.addEventListener('mouseleave', () => {
+                    if (this.state.pausedAt) {
+                        this.state.startTime += performance.now() - this.state.pausedAt;
+                        this.state.pausedAt = 0;
+                    }
+                    this.state.hovering = false;
+                });
+                this.ro = new ResizeObserver(() => this._measure());
+                this.ro.observe(this.viewport);
+                this.opts.breakpoints.forEach((bp) => {
+                    const m = window.matchMedia(bp.mq);
+                    const apply = () => {
+                        Object.keys(bp).forEach((k) => {
+                            if (k !== 'mq') this.opts[k] = bp[k];
+                        });
+                        this._measure();
+                        this._render();
+                    };
+                    if (m.addEventListener) m.addEventListener('change', apply);
+                    else m.addListener(apply);
+                    if (m.matches) apply();
+                });
+                this.viewport.addEventListener('pointermove', (e) => this._onTilt(e));
+                window.addEventListener('orientationchange', () => setTimeout(() => this._measure(), 250));
+            }
+            _measure() {
+                const viewRect = this.viewport.getBoundingClientRect();
+                const rootRect = this.root.getBoundingClientRect();
+                const pagRect = this.pagination.getBoundingClientRect();
+                const bottomGap = Math.max(12, Math.round(rootRect.bottom - pagRect.bottom));
+                const pagSpace = pagRect.height + bottomGap;
+                const availH = viewRect.height - pagSpace;
+                const cardH = Math.max(320, Math.min(640, Math.round(availH)));
+                this.state.width = viewRect.width;
+                this.state.height = viewRect.height;
+                this.state.gap = this.opts.gap;
+                this.slideW = Math.min(880, this.state.width * (1 - this.opts.peek * 2));
+                this.root.style.setProperty('--mzaPagH', `${pagSpace}px`);
+                this.root.style.setProperty('--mzaCardH', `${cardH}px`);
+            }
+            _onTilt(e) {
+                const r = this.viewport.getBoundingClientRect();
+                const mx = (e.clientX - r.left) / r.width - 0.5;
+                const my = (e.clientY - r.top) / r.height - 0.5;
+                this.root.style.setProperty('--mzaTiltX', (my * -6).toFixed(3));
+                this.root.style.setProperty('--mzaTiltY', (mx * 6).toFixed(3));
+            }
+            _onDragStart(e) {
+                if (e.pointerType === 'mouse' && e.button !== 0) return;
+                e.preventDefault();
+                this.state.dragging = true;
+                this.state.pointerId = e.pointerId;
+                this.viewport.setPointerCapture(e.pointerId);
+                this.state.x0 = e.clientX;
+                this.state.t0 = performance.now();
+                this.state.v = 0;
+                this.state.pausedAt = performance.now();
+            }
+            _onDragMove(e) {
+                if (!this.state.dragging || e.pointerId !== this.state.pointerId) return;
+                const dx = e.clientX - this.state.x0;
+                const dt = Math.max(16, performance.now() - this.state.t0);
+                this.state.v = dx / dt;
+                const slideSpan = this.slideW + this.state.gap;
+                this.state.pos = this._mod(this.state.index - dx / slideSpan, this.n);
+                this._render();
+            }
+            _onDragEnd(e) {
+                if (!this.state.dragging || (e && e.pointerId !== this.state.pointerId)) return;
+                this.state.dragging = false;
+                try {
+                    if (this.state.pointerId != null) this.viewport.releasePointerCapture(this.state.pointerId);
+                } catch { }
+                this.state.pointerId = null;
+                if (this.state.pausedAt) {
+                    this.state.startTime += performance.now() - this.state.pausedAt;
+                    this.state.pausedAt = 0;
+                }
+                const v = this.state.v;
+                const threshold = 0.18;
+                let target = Math.round(this.state.pos - Math.sign(v) * (Math.abs(v) > threshold ? 0.5 : 0));
+                this.goTo(this._mod(target, this.n));
+            }
+            _startCycle() {
+                this.state.startTime = performance.now();
+                this._renderProgress(0);
+            }
+            _loop() {
+                const step = (t) => {
+                    if (!this.state.dragging && !this.state.hovering && !this.state.animating) {
+                        const elapsed = t - this.state.startTime;
+                        const p = Math.min(1, elapsed / this.opts.interval);
+                        this._renderProgress(p);
+                        if (elapsed >= this.opts.interval) this.next();
+                    }
+                    this.state.rafId = requestAnimationFrame(step);
+                };
+                this.state.rafId = requestAnimationFrame(step);
+            }
+            _renderProgress(p) {
+                this.progressBar.style.transform = `scaleX(${p})`;
+            }
+            prev() { this.goTo(this._mod(this.state.index - 1, this.n)); }
+            next() { this.goTo(this._mod(this.state.index + 1, this.n)); }
+            goTo(i, animate = true) {
+                const start = this.state.pos || this.state.index;
+                const end = this._nearest(start, i);
+                const dur = animate ? this.opts.transitionMs : 0;
+                const t0 = performance.now();
+                const ease = (x) => 1 - Math.pow(1 - x, 4);
+                this.state.animating = true;
+                const step = (now) => {
+                    const t = Math.min(1, (now - t0) / dur);
+                    const p = dur ? ease(t) : 1;
+                    this.state.pos = start + (end - start) * p;
+                    this._render();
+                    if (t < 1) requestAnimationFrame(step);
+                    else this._afterSnap(i);
+                };
+                requestAnimationFrame(step);
+            }
+            _afterSnap(i) {
+                this.state.index = this._mod(Math.round(this.state.pos), this.n);
+                this.state.pos = this.state.index;
+                this.state.animating = false;
+                this._render(true);
+                this._startCycle();
+            }
+            _nearest(from, target) {
+                let d = target - Math.round(from);
+                if (d > this.n / 2) d -= this.n;
+                if (d < -this.n / 2) d += this.n;
+                return Math.round(from) + d;
+            }
+            _mod(i, n) { return ((i % n) + n) % n; }
+            _render(markActive = false) {
+                const span = this.slideW + this.state.gap;
+                const tiltX = parseFloat(this.root.style.getPropertyValue('--mzaTiltX') || 0);
+                const tiltY = parseFloat(this.root.style.getPropertyValue('--mzaTiltY') || 0);
+                for (let i = 0; i < this.n; i++) {
+                    let d = i - this.state.pos;
+                    if (d > this.n / 2) d -= this.n;
+                    if (d < -this.n / 2) d += this.n;
+                    const weight = Math.max(0, 1 - Math.abs(d) * 2);
+                    const biasActive = -this.slideW * this.opts.activeLeftBias * weight;
+                    const tx = d * span + biasActive;
+                    const depth = -Math.abs(d) * this.opts.zDepth;
+                    const rot = -d * this.opts.rotateY;
+                    const scale = 1 - Math.min(Math.abs(d) * this.opts.scaleDrop, 0.42);
+                    const blur = Math.min(Math.abs(d) * this.opts.blurMax, this.opts.blurMax);
+                    const z = Math.round(1000 - Math.abs(d) * 10);
+                    const s = this.slides[i];
+                    if (this.isFF) {
+                        s.style.transform = `translate(${tx}px,-50%) scale(${scale})`;
+                        s.style.filter = 'none';
+                    } else {
+                        s.style.transform = `translate3d(${tx}px,-50%,${depth}px) rotateY(${rot}deg) scale(${scale})`;
+                        s.style.filter = `blur(${blur}px)`;
+                    }
+                    s.style.zIndex = z;
+                    if (markActive) s.dataset.state = Math.round(this.state.index) === i ? 'active' : 'rest';
+                    const card = s.querySelector('.mzaCard');
+                    const parBase = Math.max(-1, Math.min(1, -d));
+                    const parX = parBase * 32 + tiltY * 1.4;
+                    const parY = tiltX * -1.1;
+                    card.style.setProperty('--mzaParX', `${parX.toFixed(2)}px`);
+                    card.style.setProperty('--mzaParY', `${parY.toFixed(2)}px`);
+                }
+                const active = this._mod(Math.round(this.state.pos), this.n);
+                this.dots.forEach((d, i) => d.setAttribute('aria-selected', i === active ? 'true' : 'false'));
+            }
+        }
+
+        const mzaEl = document.getElementById('mzaCarousel');
+        if (mzaEl) {
+            new MzaCarousel(mzaEl, { transitionMs: 900 });
+        }
+    </script>
+</body>
+
+</html>
