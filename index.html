@@ -1407,6 +1407,51 @@
             transform: translate3d(calc(var(--mzaParX, 0px) * 0.12), calc(var(--mzaParY, 0px) * 0.12), 0);
         }
 
+        @media (max-width: 900px) {
+            .mzaCarousel {
+                height: auto;
+                padding: 0 16px;
+                overflow: visible;
+                contain: none;
+            }
+
+            .mzaCarousel-viewport,
+            .mzaCarousel-track {
+                height: auto;
+                overflow: visible;
+            }
+
+            .mzaCarousel-track {
+                display: grid;
+                gap: 1rem;
+                perspective: none;
+                transform-style: flat;
+            }
+
+            .mzaCarousel-slide {
+                position: relative;
+                top: auto;
+                left: auto;
+                width: 100%;
+                height: auto;
+                min-height: 360px;
+                transform: none !important;
+                filter: none !important;
+                z-index: auto !important;
+            }
+
+            .mzaCard {
+                min-height: 360px;
+                cursor: default;
+            }
+
+            .mzaCarousel-controls,
+            .mzaCarousel-pagination,
+            .mzaCarousel-progress {
+                display: none;
+            }
+        }
+
         @media (max-width: 1000px) {
             :root {
                 --mzaC-slideW: min(92vw, 640px);

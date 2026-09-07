@@ -227,8 +227,9 @@ class MzaCarousel {
 		this.state.width = viewRect.width; this.state.height = viewRect.height; this.state.gap = this.opts.gap; this.slideW = Math.min(880, this.state.width * (1 - this.opts.peek * 2));
 		this.root.style.setProperty('--mzaPagH', `${paginationSpace}px`); this.root.style.setProperty('--mzaCardH', `${cardHeight}px`);
 	}
-	_onTilt(event) { const rect = this.viewport.getBoundingClientRect(); const mx = (event.clientX - rect.left) / rect.width - 0.5; const my = (event.clientY - rect.top) / rect.height - 0.5; this.root.style.setProperty('--mzaTiltX', (my * -6).toFixed(3)); this.root.style.setProperty('--mzaTiltY', (mx * 6).toFixed(3)); }
-	_onDragStart(event) { if (event.pointerType === 'mouse' && event.button !== 0) return; event.preventDefault(); this.state.dragging = true; this.state.pointerId = event.pointerId; this.viewport.setPointerCapture(event.pointerId); this.state.x0 = event.clientX; this.state.t0 = performance.now(); this.state.v = 0; this.state.pausedAt = performance.now(); }
+	_isMobile() { return window.matchMedia('(max-width: 900px)').matches; }
+	_onTilt(event) { if (this._isMobile()) return; const rect = this.viewport.getBoundingClientRect(); const mx = (event.clientX - rect.left) / rect.width - 0.5; const my = (event.clientY - rect.top) / rect.height - 0.5; this.root.style.setProperty('--mzaTiltX', (my * -6).toFixed(3)); this.root.style.setProperty('--mzaTiltY', (mx * 6).toFixed(3)); }
+	_onDragStart(event) { if (this._isMobile() || (event.pointerType === 'mouse' && event.button !== 0)) return; event.preventDefault(); this.state.dragging = true; this.state.pointerId = event.pointerId; this.viewport.setPointerCapture(event.pointerId); this.state.x0 = event.clientX; this.state.t0 = performance.now(); this.state.v = 0; this.state.pausedAt = performance.now(); }
 	_onDragMove(event) { if (!this.state.dragging || event.pointerId !== this.state.pointerId) return; const dx = event.clientX - this.state.x0; const dt = Math.max(16, performance.now() - this.state.t0); this.state.v = dx / dt; this.state.pos = this._mod(this.state.index - dx / (this.slideW + this.state.gap), this.n); this._render(); }
 	_onDragEnd(event) {
 		if (!this.state.dragging || (event && event.pointerId !== this.state.pointerId)) return; this.state.dragging = false;
@@ -251,6 +252,14 @@ class MzaCarousel {
 	_nearest(from, target) { let distance = target - Math.round(from); if (distance > this.n / 2) distance -= this.n; if (distance < -this.n / 2) distance += this.n; return Math.round(from) + distance; }
 	_mod(index, length) { return ((index % length) + length) % length; }
 	_render(markActive = false) {
+		if (this._isMobile()) {
+			this.slides.forEach((slide) => {
+				slide.style.transform = 'none';
+				slide.style.filter = 'none';
+				slide.style.zIndex = 'auto';
+			});
+			return;
+		}
 		const span = this.slideW + this.state.gap; const tiltX = parseFloat(this.root.style.getPropertyValue('--mzaTiltX') || 0); const tiltY = parseFloat(this.root.style.getPropertyValue('--mzaTiltY') || 0);
 		for (let i = 0; i < this.n; i++) {
 			let distance = i - this.state.pos; if (distance > this.n / 2) distance -= this.n; if (distance < -this.n / 2) distance += this.n;
