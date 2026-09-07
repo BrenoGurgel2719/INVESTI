@@ -1571,6 +1571,47 @@
                 align-items: flex-start;
             }
         }
+
+        /* Mobile: todos os diferenciais ficam visiveis em uma lista vertical. */
+        @media (max-width: 900px) {
+            .mzaCarousel {
+                height: auto !important;
+                max-height: none;
+                overflow: visible;
+            }
+
+            .mzaCarousel-viewport,
+            .mzaCarousel-track {
+                height: auto !important;
+                min-height: 0;
+                overflow: visible;
+            }
+
+            .mzaCarousel-track {
+                display: grid;
+                grid-auto-rows: minmax(360px, auto);
+            }
+
+            .mzaCarousel-slide {
+                display: block;
+                height: auto !important;
+                min-height: 360px;
+            }
+
+            .mzaCard {
+                height: auto !important;
+                min-height: 360px;
+            }
+
+            .mzaCard-info {
+                max-height: none;
+                overflow: visible;
+            }
+
+            .mzaCard-media {
+                height: 220px;
+            }
+        }
         /* ===== Seção 1: Portfólio de soluções ===== */
         .portfolio-section {
             position: relative;
