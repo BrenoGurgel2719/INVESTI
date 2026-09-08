@@ -26,8 +26,14 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://cdn.jsdelivr.net">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap"
-        rel="stylesheet">
+    <link rel="preload"
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap"
+        as="style"
+        onload="this.onload=null;this.rel='stylesheet'">
+    <noscript>
+        <link rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap">
+    </noscript>
 
     <link rel="preload" as="image" href="imagens/img-hero.avif" fetchpriority="high">
 
@@ -329,6 +335,7 @@
 
         .img-wrapper {
             width: 100%;
+            aspect-ratio: 1516 / 794;
             max-height: 100vh;
             overflow: hidden;
             background: #000000;
@@ -2232,7 +2239,7 @@
         <div class="img-wrapper" id="inicio">
             <h1 class="sr-only">Sir Investimentos: assessoria de investimentos para seus objetivos financeiros</h1>
             <a href="#assessoria" aria-label="Conheça as opções de assessoria">
-                <img src="imagens/img-hero.avif" alt="Família aproveitando um momento ao ar livre" fetchpriority="high" decoding="async" />
+                <img src="imagens/img-hero.avif" alt="Família aproveitando um momento ao ar livre" width="1516" height="794" fetchpriority="high" decoding="async" />
             </a>
         </div>
 
