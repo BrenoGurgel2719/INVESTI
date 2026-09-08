@@ -4,9 +4,8 @@ const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)
 
 if (!prefersReducedMotion) {
 	gsap.utils.toArray('main > section').forEach((section) => {
-		gsap.fromTo(section, { autoAlpha: 0, y: 48 }, {
+		gsap.fromTo(section, { autoAlpha: 0 }, {
 			autoAlpha: 1,
-			y: 0,
 			duration: 0.9,
 			ease: 'power3.out',
 			scrollTrigger: { trigger: section, start: 'top 88%', once: true }
@@ -93,8 +92,8 @@ galleryCards.forEach((card) => card.addEventListener('click', (event) => {
 	card.classList.add('is-open');
 }));
 
-gsap.from('.gallery-card', { y: 30, opacity: 0, duration: 0.85, stagger: 0.12, ease: 'power2.out', scrollTrigger: { trigger: '.about-section', start: 'top 78%' } });
-gsap.from('.about-copy > *', { y: 24, opacity: 0, duration: 0.7, stagger: 0.12, ease: 'power2.out', scrollTrigger: { trigger: '.about-copy', start: 'top 80%' } });
+gsap.from('.gallery-card', { opacity: 0, duration: 0.85, stagger: 0.12, ease: 'power2.out', scrollTrigger: { trigger: '.about-section', start: 'top 78%' } });
+gsap.from('.about-copy > *', { opacity: 0, duration: 0.7, stagger: 0.12, ease: 'power2.out', scrollTrigger: { trigger: '.about-copy', start: 'top 80%' } });
 
 document.querySelectorAll('.stat-value').forEach((counter) => {
 	const target = Number(counter.dataset.target || 0);
@@ -129,14 +128,14 @@ if (npsValue) {
 
 ['.solution-card', '.tier-card', '.journey-step'].forEach((selector) => {
 	const trigger = document.querySelector(selector);
-	if (trigger) gsap.from(selector, { y: 24, opacity: 0, duration: 0.7, stagger: 0.1, ease: 'power2.out', scrollTrigger: { trigger, start: 'top 82%', once: true } });
+	if (trigger) gsap.from(selector, { opacity: 0, duration: 0.7, stagger: 0.1, ease: 'power2.out', scrollTrigger: { trigger, start: 'top 82%', once: true } });
 });
 
 const journeySteps = document.querySelector('.journey-steps');
 if (journeySteps) gsap.to(journeySteps, { '--journey-progress': 1, ease: 'none', scrollTrigger: { trigger: journeySteps, start: 'top 72%', end: 'bottom 42%', scrub: 0.8, invalidateOnRefresh: true } });
 
 const journeyCta = document.querySelector('.journey-cta');
-if (journeyCta) gsap.from(journeyCta, { y: 20, opacity: 0, duration: 0.7, ease: 'power2.out', scrollTrigger: { trigger: journeyCta, start: 'top 88%', once: true } });
+if (journeyCta) gsap.from(journeyCta, { opacity: 0, duration: 0.7, ease: 'power2.out', scrollTrigger: { trigger: journeyCta, start: 'top 88%', once: true } });
 
 const testimonials = [
 	['Rodrigo Guedes', 'Assessor', 'imagens/img-testimonial-1.webp', 'Meu assessor percebe minhas necessidades de investimento e sugere as aplicações de acordo com o cenário econômico.'],
