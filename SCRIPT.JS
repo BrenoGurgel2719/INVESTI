@@ -22,17 +22,26 @@ if (scrollWrap && timelinePin && timelineTrack) {
 	const timelineMedia = gsap.matchMedia();
 
 	timelineMedia.add('(min-width: 901px)', () => {
+		let timelineDistance = 0;
+		let resizeFrame = 0;
 		const setActive = (progress) => {
 			const index = Math.round(progress * (timelineItems.length - 1));
 			timelineItems.forEach((item, itemIndex) => item.classList.toggle('is-active', itemIndex === index));
 		};
 		const setScrollDistance = () => {
-			const extra = Math.max(timelineTrack.scrollWidth - timelinePin.clientWidth, 0);
-			scrollWrap.style.height = `calc(100vh + ${extra}px)`;
+			timelineDistance = Math.max(timelineTrack.scrollWidth - timelinePin.clientWidth, 0);
+			scrollWrap.style.height = `calc(100vh + ${timelineDistance}px)`;
+		};
+		const scheduleScrollDistance = () => {
+			cancelAnimationFrame(resizeFrame);
+			resizeFrame = requestAnimationFrame(() => {
+				setScrollDistance();
+				ScrollTrigger.refresh();
+			});
 		};
 		setScrollDistance();
 		const tween = gsap.to(timelineTrack, {
-			x: () => -Math.max(timelineTrack.scrollWidth - timelinePin.clientWidth, 0),
+			x: () => -timelineDistance,
 			ease: 'none',
 			scrollTrigger: {
 				trigger: scrollWrap,
@@ -40,14 +49,14 @@ if (scrollWrap && timelinePin && timelineTrack) {
 				end: 'bottom bottom',
 				scrub: true,
 				invalidateOnRefresh: true,
-				onRefresh: setScrollDistance,
 				onUpdate: (self) => setActive(self.progress)
 			}
 		});
 		setActive(0);
-		window.addEventListener('resize', setScrollDistance);
+		window.addEventListener('resize', scheduleScrollDistance);
 		return () => {
-			window.removeEventListener('resize', setScrollDistance);
+			window.removeEventListener('resize', scheduleScrollDistance);
+			cancelAnimationFrame(resizeFrame);
 			tween.kill();
 			gsap.set(timelineTrack, { clearProps: 'x' });
 			scrollWrap.style.height = '';
@@ -223,11 +232,11 @@ class MzaCarousel {
 		const viewRect = this.viewport.getBoundingClientRect(); const rootRect = this.root.getBoundingClientRect(); const paginationRect = this.pagination.getBoundingClientRect();
 		const bottomGap = Math.max(12, Math.round(rootRect.bottom - paginationRect.bottom)); const paginationSpace = paginationRect.height + bottomGap;
 		const availableHeight = viewRect.height - paginationSpace; const cardHeight = Math.max(320, Math.min(640, Math.round(availableHeight)));
-		this.state.width = viewRect.width; this.state.height = viewRect.height; this.state.gap = this.opts.gap; this.slideW = Math.min(880, this.state.width * (1 - this.opts.peek * 2));
+		this.viewportRect = viewRect; this.state.width = viewRect.width; this.state.height = viewRect.height; this.state.gap = this.opts.gap; this.slideW = Math.min(880, this.state.width * (1 - this.opts.peek * 2));
 		this.root.style.setProperty('--mzaPagH', `${paginationSpace}px`); this.root.style.setProperty('--mzaCardH', `${cardHeight}px`);
 	}
 	_isMobile() { return window.matchMedia('(max-width: 900px)').matches; }
-	_onTilt(event) { if (this._isMobile()) return; const rect = this.viewport.getBoundingClientRect(); const mx = (event.clientX - rect.left) / rect.width - 0.5; const my = (event.clientY - rect.top) / rect.height - 0.5; this.root.style.setProperty('--mzaTiltX', (my * -6).toFixed(3)); this.root.style.setProperty('--mzaTiltY', (mx * 6).toFixed(3)); }
+	_onTilt(event) { if (this._isMobile() || !this.viewportRect) return; const rect = this.viewportRect; const mx = (event.clientX - rect.left) / rect.width - 0.5; const my = (event.clientY - rect.top) / rect.height - 0.5; this.root.style.setProperty('--mzaTiltX', (my * -6).toFixed(3)); this.root.style.setProperty('--mzaTiltY', (mx * 6).toFixed(3)); }
 	_onDragStart(event) { if (this._isMobile() || (event.pointerType === 'mouse' && event.button !== 0)) return; event.preventDefault(); this.state.dragging = true; this.state.pointerId = event.pointerId; this.viewport.setPointerCapture(event.pointerId); this.state.x0 = event.clientX; this.state.t0 = performance.now(); this.state.v = 0; this.state.pausedAt = performance.now(); }
 	_onDragMove(event) { if (!this.state.dragging || event.pointerId !== this.state.pointerId) return; const dx = event.clientX - this.state.x0; const dt = Math.max(16, performance.now() - this.state.t0); this.state.v = dx / dt; this.state.pos = this._mod(this.state.index - dx / (this.slideW + this.state.gap), this.n); this._render(); }
 	_onDragEnd(event) {
